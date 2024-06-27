@@ -1,0 +1,24 @@
+import { QueryClientProvider } from '@tanstack/react-query';
+import * as React from 'react';
+import { BallTriangle } from 'react-loader-spinner';
+
+import { queryClient } from '@/lib/react-query';
+import { BookingsProvider } from '@/reducers/bookings';
+
+type Props = {
+  children: React.ReactNode;
+};
+
+export const AppProvider = ({ children }: Props) => {
+  return (
+    <>
+      <QueryClientProvider client={queryClient}>
+        <BookingsProvider>
+          <React.Suspense fallback={<BallTriangle />}>
+            {children}
+          </React.Suspense>
+        </BookingsProvider>
+      </QueryClientProvider>
+    </>
+  );
+};
