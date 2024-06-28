@@ -2,6 +2,6 @@ import { createLazyFileRoute } from '@tanstack/react-router';
 
 import { Book } from '@/pages/Book';
 
-export const Route = createLazyFileRoute('/book')({
+export const Route = createLazyFileRoute('/book/$propertyId')({
   component: Book,
 });

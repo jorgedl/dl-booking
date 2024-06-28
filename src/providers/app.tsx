@@ -5,6 +5,8 @@ import { BallTriangle } from 'react-loader-spinner';
 import { queryClient } from '@/lib/react-query';
 import { BookingsProvider } from '@/reducers/bookings';
 
+import { GlobalStyle } from './globalStyles';
+
 type Props = {
   children: React.ReactNode;
 };
@@ -12,6 +14,7 @@ type Props = {
 export const AppProvider = ({ children }: Props) => {
   return (
     <>
+      <GlobalStyle />
       <QueryClientProvider client={queryClient}>
         <BookingsProvider>
           <React.Suspense fallback={<BallTriangle />}>

@@ -12,11 +12,6 @@ export const Container = styled.div`
   }
 `;
 
-export const Card = styled.div`
-  pointer-events: auto;
-  padding: 1rem;
-`;
-
 export const SidePanel = styled.div`
   max-width: 50vw;
   min-width: 20rem;
@@ -24,6 +19,10 @@ export const SidePanel = styled.div`
 
   @media screen and (max-width: 768px) {
     min-height: 60vh;
-    border-top-radius: 1rem;
+    min-width: 100%;
   }
+`;
+
+export const Title = styled.h1`
+  font-size: 1.5rem;
 `;

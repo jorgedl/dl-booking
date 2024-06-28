@@ -2,13 +2,12 @@ import { useQuery } from '@tanstack/react-query';
 
 import { ExtractFnReturnType, QueryConfig } from '@/lib/react-query';
 import { fetchProperties } from '@/mock/fetchProperties';
+import { type Properties } from '@/types';
 
 type Params = {
   start: string;
   end: string;
 };
-
-interface Properties {}
 
 const getProperties = (params?: Params): Promise<Properties> => {
   return fetchProperties(params);

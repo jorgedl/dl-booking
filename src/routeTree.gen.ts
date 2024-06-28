@@ -13,23 +13,31 @@ import { createFileRoute } from '@tanstack/react-router'
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
+import { Route as BookIndexImport } from './routes/book/index'
 
 // Create Virtual Routes
 
-const BookLazyImport = createFileRoute('/book')()
 const IndexLazyImport = createFileRoute('/')()
+const BookPropertyIdLazyImport = createFileRoute('/book/$propertyId')()
 
 // Create/Update Routes
-
-const BookLazyRoute = BookLazyImport.update({
-  path: '/book',
-  getParentRoute: () => rootRoute,
-} as any).lazy(() => import('./routes/book.lazy').then((d) => d.Route))
 
 const IndexLazyRoute = IndexLazyImport.update({
   path: '/',
   getParentRoute: () => rootRoute,
 } as any).lazy(() => import('./routes/index.lazy').then((d) => d.Route))
+
+const BookIndexRoute = BookIndexImport.update({
+  path: '/book/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const BookPropertyIdLazyRoute = BookPropertyIdLazyImport.update({
+  path: '/book/$propertyId',
+  getParentRoute: () => rootRoute,
+} as any).lazy(() =>
+  import('./routes/book/$propertyId.lazy').then((d) => d.Route),
+)
 
 // Populate the FileRoutesByPath interface
 
@@ -42,11 +50,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexLazyImport
       parentRoute: typeof rootRoute
     }
-    '/book': {
-      id: '/book'
+    '/book/$propertyId': {
+      id: '/book/$propertyId'
+      path: '/book/$propertyId'
+      fullPath: '/book/$propertyId'
+      preLoaderRoute: typeof BookPropertyIdLazyImport
+      parentRoute: typeof rootRoute
+    }
+    '/book/': {
+      id: '/book/'
       path: '/book'
       fullPath: '/book'
-      preLoaderRoute: typeof BookLazyImport
+      preLoaderRoute: typeof BookIndexImport
       parentRoute: typeof rootRoute
     }
   }
@@ -56,7 +71,8 @@ declare module '@tanstack/react-router' {
 
 export const routeTree = rootRoute.addChildren({
   IndexLazyRoute,
-  BookLazyRoute,
+  BookPropertyIdLazyRoute,
+  BookIndexRoute,
 })
 
 /* prettier-ignore-end */
@@ -68,14 +84,18 @@ export const routeTree = rootRoute.addChildren({
       "filePath": "__root.tsx",
       "children": [
         "/",
-        "/book"
+        "/book/$propertyId",
+        "/book/"
       ]
     },
     "/": {
       "filePath": "index.lazy.tsx"
     },
-    "/book": {
-      "filePath": "book.lazy.tsx"
+    "/book/$propertyId": {
+      "filePath": "book/$propertyId.lazy.tsx"
+    },
+    "/book/": {
+      "filePath": "book/index.tsx"
     }
   }
 }

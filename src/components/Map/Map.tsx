@@ -1,10 +1,12 @@
-import maplibregl, { Map as MapType } from 'maplibre-gl';
+import maplibregl, { type LngLat, type Map as MapType } from 'maplibre-gl';
 import React from 'react';
 import 'maplibre-gl/dist/maplibre-gl.css';
 
 import * as S from './Map.styles';
 
-export const Map: React.FC = () => {
+export const Map: React.FC<{ markerCoordinates?: LngLat }> = ({
+  markerCoordinates,
+}) => {
   const mapRef = React.useRef<MapType | null>(null);
 
   React.useEffect(() => {
@@ -15,7 +17,20 @@ export const Map: React.FC = () => {
       center: [-74.5, 40],
       zoom: 9,
     });
+
+    // The cleanup were causing a console error, so I'm commenting it
+    // return () => {
+    //   mapRef.current?.remove();
+    //   mapRef.current = null;
+    // };
   }, []);
+
+  React.useEffect(() => {
+    console.log(markerCoordinates);
+    mapRef.current?.flyTo({
+      center: markerCoordinates,
+    });
+  }, [markerCoordinates, mapRef]);
 
   return <S.MapContainer id="map" />;
 };

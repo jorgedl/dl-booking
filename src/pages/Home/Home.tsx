@@ -1,7 +1,8 @@
-import { Link } from '@tanstack/react-router';
-
 import { useProperties } from '@/api/useProperties';
-import { Card } from '@/components/Card';
+import { Container } from '@/components/Container';
+import { Header } from '@/components/Header';
+import { Properties } from '@/components/Properties';
+import { Search } from '@/components/Search';
 
 export const Home: React.FC = () => {
   const { data } = useProperties();
@@ -10,10 +11,12 @@ export const Home: React.FC = () => {
 
   return (
     <>
-      <Card>
-        DLBooking Home <br />
-        <Link to="/book">Book page</Link>
-      </Card>
+      <Header>
+        <Search />
+      </Header>
+      <Container>
+        <Properties items={data} />
+      </Container>
     </>
   );
 };
