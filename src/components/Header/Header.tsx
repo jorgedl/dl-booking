@@ -9,16 +9,15 @@ export const Header: React.FC<{ children?: React.ReactNode }> = ({
   children,
 }) => (
   <S.Nav>
-    <Container>
+    <Container $noColumn>
       <S.InnerNav>
         <Link to="/">
           <S.Logo>
             <UfoIcon />
-            <h1>DLBooking</h1>
+            <S.Title>DLBooking</S.Title>
           </S.Logo>
         </Link>
         {children}
-        <div />
       </S.InnerNav>
     </Container>
   </S.Nav>

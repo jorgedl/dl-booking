@@ -12,8 +12,11 @@ export const Search: React.FC = () => {
         placeholder="Select the location"
         label="Where"
       />
-      <RangePicker onChange={(d) => console.log({ d })} />
-      <Button>Go</Button>
+      <RangePicker
+        placeholder="Select the dates"
+        onChange={(d) => console.log({ d })}
+      />
+      <Button>Search</Button>
     </S.Container>
   );
 };

@@ -10,7 +10,8 @@ import * as S from './RangePicker.styles';
 
 export const RangePicker: React.FC<{
   onChange?: (dateRange: [Date | undefined, Date | undefined]) => void;
-}> = ({ onChange }) => {
+  placeholder: string;
+}> = ({ onChange, placeholder }) => {
   const [startDate, setStartDate] = React.useState<Date | undefined>();
   const [endDate, setEndDate] = React.useState<Date | undefined>();
 
@@ -34,7 +35,8 @@ export const RangePicker: React.FC<{
         excludeDates={[addDays(new Date(), 1), addDays(new Date(), 5)]}
         selectsRange
         selectsDisabledDaysInRange
-        customInput={<Input label="When" placeholder="Select the date range" />}
+        placeholderText={placeholder}
+        customInput={<Input label="When" />}
       />
     </S.Field>
   );

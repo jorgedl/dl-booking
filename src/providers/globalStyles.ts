@@ -29,7 +29,8 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   :root {
-    --primary: #1AF64A;
+    --primary: #00ab25;
+    --onPrimary: #FFF;
     --text-primary: #272a2f;
     --text-secondary: #6a6a6a;
     --outline: #e9e9e9;
@@ -46,30 +47,31 @@ export const GlobalStyle = createGlobalStyle`
     --margin-lg: 32px;
     --margin-xl: 64px;
 
-    --control-height: 48px;
+    --control-height: 40px;
 
     --border-radius: 8px;
 
     --item-width: 400px;
 
-    --application-padding: 0 var(--padding-xl);
+    --application-inline-padding: var(--padding-xl);
+    --application-column-padding: var(--padding-lg);
 
 
     @media screen and (max-width: 1200px) {
       --item-width: 300px;
-      --application-padding: 0 var(--padding-lg);
+      --application-inline-padding: var(--padding-lg);
     }
 
 
     @media screen and (max-width: 768px) {
       --item-width: 200px;
-      --application-padding: 0 var(--padding-md);
+      --application-inline-padding: var(--padding-md);
     }
 
 
     @media screen and (max-width: 400px) {
       --item-width: 100%;
-      --application-padding: 0 var(--padding-sm);
+      --application-inline-padding: var(--padding-sm);
     }
   }
 `;

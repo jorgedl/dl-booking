@@ -9,7 +9,6 @@ export const Logo = styled.div`
 
 export const Nav = styled.nav`
   border-bottom: solid var(--outline) 1px;
-  margin-bottom: var(--margin-lg);
 `;
 
 export const InnerNav = styled.nav`
@@ -18,7 +17,12 @@ export const InnerNav = styled.nav`
   grid-template-columns: 1fr 2fr 1fr;
   gap: 1rem;
 
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 860px) {
     grid-template-columns: 1fr;
   }
+`;
+
+export const Title = styled.div`
+  font-size: 2rem;
+  font-weight: 700;
 `;

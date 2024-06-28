@@ -2,10 +2,9 @@ import styled from 'styled-components';
 
 export const Container = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr 48px;
-  border: solid var(--outline) 1px;
+  grid-template-columns: 1fr 1fr auto;
   padding: var(--padding-sm);
-  border-radius: var(--border-radius);
+  gap: 1rem;
 
   @media screen and (max-width: 768px) {
     grid-template-columns: 1fr;

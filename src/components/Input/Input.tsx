@@ -16,19 +16,16 @@ interface Props {
 export const InputComponent: React.ForwardRefRenderFunction<
   HTMLInputElement,
   Props
-> = ({ label, value, placeholder, onClick, onChange }, ref) => {
+> = ({ value, placeholder, onClick, onChange }, ref) => {
   return (
-    <div onFocus={onClick}>
-      <S.Label>
-        {label}{' '}
-        <S.Input
-          placeholder={placeholder}
-          value={value}
-          ref={ref}
-          onChange={onChange}
-        />
-      </S.Label>
-    </div>
+    <S.Field onFocus={onClick}>
+      <S.Input
+        placeholder={placeholder}
+        value={value}
+        ref={ref}
+        onChange={onChange}
+      />
+    </S.Field>
   );
 };
 
