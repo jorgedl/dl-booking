@@ -1,5 +1,4 @@
 import { QueryClientProvider } from '@tanstack/react-query';
-import { TanStackRouterDevtools } from '@tanstack/router-devtools';
 import * as React from 'react';
 import { BallTriangle } from 'react-loader-spinner';
 
@@ -16,7 +15,6 @@ export const AppProvider = ({ children }: Props) => {
   return (
     <>
       <GlobalStyle />
-      <TanStackRouterDevtools />
       <QueryClientProvider client={queryClient}>
         <BookingsProvider>
           <React.Suspense fallback={<BallTriangle />}>
