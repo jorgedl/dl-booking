@@ -1,6 +1,7 @@
 import { Link } from '@tanstack/react-router';
 
 import { useProperties } from '@/api/useProperties';
+import { Card } from '@/components/Card';
 
 export const Home: React.FC = () => {
   const { data } = useProperties();
@@ -9,8 +10,10 @@ export const Home: React.FC = () => {
 
   return (
     <>
-      <div>DLBooking Home</div>
-      <Link to="/book">Book page</Link>
+      <Card>
+        DLBooking Home <br />
+        <Link to="/book">Book page</Link>
+      </Card>
     </>
   );
 };

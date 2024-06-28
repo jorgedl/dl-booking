@@ -18,6 +18,10 @@ export const GlobalStyle = createGlobalStyle`
     margin: 0;
   }
 
+  a {
+    text-decoration: none;
+  }
+
   :root {
     --primary: #1AF64A;
   }
