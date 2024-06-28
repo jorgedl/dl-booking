@@ -30,6 +30,7 @@ export const GlobalStyle = createGlobalStyle`
 
   :root {
     --primary: #00ab25;
+    --hoverPrimary: #008b1e;
     --onPrimary: #FFF;
     --text-primary: #272a2f;
     --text-secondary: #6a6a6a;

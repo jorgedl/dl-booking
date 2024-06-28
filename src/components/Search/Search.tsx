@@ -1,3 +1,5 @@
+import { IconSearch } from '@tabler/icons-react';
+
 import { Button } from '@/components/Button';
 import { Input } from '@/components/Input';
 import { RangePicker } from '@/components/RangePicker';
@@ -10,13 +12,14 @@ export const Search: React.FC = () => {
       <Input
         onChange={({ target: { value } }) => console.log({ value })}
         placeholder="Select the location"
-        label="Where"
       />
       <RangePicker
         placeholder="Select the dates"
         onChange={(d) => console.log({ d })}
       />
-      <Button>Search</Button>
+      <Button>
+        <IconSearch />
+      </Button>
     </S.Container>
   );
 };

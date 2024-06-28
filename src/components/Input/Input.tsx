@@ -3,7 +3,7 @@ import { forwardRef } from 'react';
 import * as S from './Input.styles';
 
 interface Props {
-  label: string;
+  renderValue?(value?: string): string;
   onChange?(e: React.ChangeEvent<HTMLInputElement>): void;
   onClick?(e: React.FocusEvent<HTMLDivElement>): void;
   value?: string;
@@ -16,12 +16,13 @@ interface Props {
 export const InputComponent: React.ForwardRefRenderFunction<
   HTMLInputElement,
   Props
-> = ({ value, placeholder, onClick, onChange }, ref) => {
+> = ({ value, placeholder, onClick, onChange, renderValue }, ref) => {
+  console.log({ value });
   return (
     <S.Field onFocus={onClick}>
       <S.Input
         placeholder={placeholder}
-        value={value}
+        value={typeof renderValue === 'function' ? renderValue(value) : value}
         ref={ref}
         onChange={onChange}
       />

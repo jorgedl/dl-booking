@@ -4,6 +4,38 @@ export const Field = styled.div`
   .react-datepicker-wrapper {
     width: 100%;
   }
+
+  .react-datepicker__close-icon::after {
+    background-color: var(--primary);
+  }
+
+  .react-datepicker__day {
+    &--selected {
+      background-color: var(--primary);
+    }
+
+    &--keyboard-selected {
+      background-color: var(--primary);
+
+      &:hover {
+        background-color: var(--hoverPrimary);
+      }
+    }
+
+    &--in-selecting-range {
+      &:not(.react-datepicker__day--in-range) {
+        background-color: var(--primary);
+      }
+    }
+
+    &--in-range {
+      background-color: var(--primary);
+
+      &:hover {
+        background-color: var(--hoverPrimary);
+      }
+    }
+  }
 `;
 
 export const Label = styled.label`

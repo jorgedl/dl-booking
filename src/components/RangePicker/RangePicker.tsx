@@ -25,6 +25,20 @@ export const RangePicker: React.FC<{
     typeof onChange !== 'undefined' && onChange([startDate, endDate]);
   }, [onChange, startDate, endDate]);
 
+  const renderValue = (value: string) => {
+    if (value) {
+      const [start, end] = value.split(' - ');
+      return `${start} - ${end || 'Check-out'}`;
+    }
+    return '';
+  };
+
+  const onCalendarClose = () => {
+    if (!endDate) {
+      startDate && setEndDate(addDays(startDate, 1));
+    }
+  };
+
   return (
     <S.Field>
       <DatePicker
@@ -36,7 +50,10 @@ export const RangePicker: React.FC<{
         selectsRange
         selectsDisabledDaysInRange
         placeholderText={placeholder}
-        customInput={<Input label="When" />}
+        customInput={<Input renderValue={renderValue} />}
+        isClearable={true}
+        dateFormat="MMMM d, yyyy"
+        onCalendarClose={onCalendarClose}
       />
     </S.Field>
   );
