@@ -14,7 +14,7 @@ export const Header: React.FC<{ children?: React.ReactNode }> = ({
         <Link to="/">
           <S.Logo>
             <UfoIcon />
-            <S.Title>DLBooking</S.Title>
+            <S.Title>DLBOOKING</S.Title>
           </S.Logo>
         </Link>
         {children}

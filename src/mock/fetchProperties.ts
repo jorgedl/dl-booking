@@ -15,6 +15,7 @@ export const mockProperties: Property[] = [
     price: 200,
     description:
       'Sunny Beach House is a beautiful beachside property offering stunning ocean views, direct beach access, and modern amenities for a perfect seaside retreat.',
+    lockedDays: ['06-30-2024'],
   },
   {
     id: '2a9f9fba-4d3b-4b9e-9e5d-9f8b7e2d3c6e',

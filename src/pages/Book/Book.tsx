@@ -8,6 +8,8 @@ import { Button } from '@/components/Button';
 import { Container } from '@/components/Container';
 import { Header } from '@/components/Header';
 import { Map } from '@/components/Map';
+import { RangePicker } from '@/components/RangePicker';
+import { DateRange } from '@/types';
 
 import * as S from './Book.styles';
 
@@ -25,6 +27,8 @@ export const Book: React.FC = () => {
       navigate({ to: '/' });
     }
   }, [isFetched, data, navigate]);
+
+  console.log({ data });
 
   return (
     <>
@@ -58,6 +62,13 @@ export const Book: React.FC = () => {
                   <S.Body>
                     <S.Title>{data?.label}</S.Title>
                     <p>{data?.description}</p>
+                    <RangePicker
+                      placeholder={`Select the dates you wish to stay in ${data.label}`}
+                      onChange={([start, end]: DateRange) =>
+                        console.log([start, end])
+                      }
+                      excludeDates={data.lockedDays}
+                    />
                     <div>
                       <Button>Book Now</Button>
                     </div>

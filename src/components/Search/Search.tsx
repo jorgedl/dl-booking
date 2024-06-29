@@ -6,19 +6,12 @@ import { DateRange } from '@/types';
 
 import * as S from './Search.styles';
 
-interface SearchProps {
-  rangePickerPlaceholder?: string;
-}
-
-interface WithAutocomplete<T> {
+interface SearchProps<T> {
+  rangePickerPlaceholder: string;
   onSearch(query: string): void;
   onDateChange(range: DateRange): void;
   autoCompletePlaceholder: string;
   items?: T;
-}
-
-interface WithRangePicker {
-  rangePickerPlaceholder: string;
 }
 
 export const Search = <T,>({
@@ -27,7 +20,7 @@ export const Search = <T,>({
   items,
   autoCompletePlaceholder,
   rangePickerPlaceholder,
-}: SearchProps & WithAutocomplete<T> & WithRangePicker) => {
+}: SearchProps<T>) => {
   return (
     <S.Container>
       {typeof onSearch === 'function' && (
@@ -39,9 +32,7 @@ export const Search = <T,>({
       )}
       <RangePicker
         placeholder={rangePickerPlaceholder}
-        onChange={([start, end]: DateRange) =>
-          start && end && onDateChange([start, end])
-        }
+        onChange={([start, end]: DateRange) => onDateChange([start, end])}
       />
     </S.Container>
   );

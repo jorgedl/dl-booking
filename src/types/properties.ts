@@ -7,6 +7,7 @@ export interface Property {
   lat: number;
   lng: number;
   category: string;
+  lockedDays?: string[];
 }
 
 export type Properties = Property[];

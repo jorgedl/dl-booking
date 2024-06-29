@@ -1,51 +1,43 @@
-import { addDays, format } from 'date-fns';
+import { format } from 'date-fns';
 import React from 'react';
 import DatePicker from 'react-datepicker';
 
 import 'react-datepicker/dist/react-datepicker.css';
 
 import { Input } from '@/components/Input';
+import { useRangePicker } from '@/hooks/useRangePicker';
 import { DateRange } from '@/types';
 
 import * as S from './RangePicker.styles';
 
+const DATE_FORMAT = 'MM-dd-yyyy';
+
 const formatDate = (date: Date | undefined) => {
   if (date) {
-    return format(date, 'MM-dd-yyyy');
+    return format(date, DATE_FORMAT);
   }
 };
 
 export const RangePicker: React.FC<{
   onChange?: (dateRange: DateRange) => void;
   placeholder: string;
-}> = ({ onChange, placeholder }) => {
-  const [startDate, setStartDate] = React.useState<Date | undefined>();
-  const [endDate, setEndDate] = React.useState<Date | undefined>();
-
-  const onDateChange = (dates: [Date | null, Date | null]) => {
-    const [start, end] = dates;
-    setStartDate(start || undefined);
-    setEndDate(end || undefined);
-  };
+  excludeDates?: string[];
+}> = ({ onChange, placeholder, excludeDates }) => {
+  const {
+    startDate,
+    endDate,
+    onClose,
+    onChange: onDateChange,
+    toString,
+    lockedDates,
+  } = useRangePicker({
+    excludeDates,
+  });
 
   React.useEffect(() => {
     typeof onChange !== 'undefined' &&
       onChange([formatDate(startDate), formatDate(endDate)]);
-  }, [onChange, startDate, endDate]);
-
-  const renderValue = (value: string) => {
-    if (value) {
-      const [start, end] = value.split(' - ');
-      return `${start} - ${end || 'Check-out'}`;
-    }
-    return '';
-  };
-
-  const onCalendarClose = () => {
-    if (startDate && !endDate) {
-      startDate && setEndDate(addDays(startDate, 1));
-    }
-  };
+  }, [startDate, endDate]);
 
   return (
     <S.Field>
@@ -54,14 +46,14 @@ export const RangePicker: React.FC<{
         onChange={onDateChange}
         startDate={startDate}
         endDate={endDate}
-        excludeDates={[addDays(new Date(), 1), addDays(new Date(), 5)]}
+        excludeDates={lockedDates}
         selectsRange
         selectsDisabledDaysInRange
         placeholderText={placeholder}
-        customInput={<Input renderValue={renderValue} />}
+        customInput={<Input renderValue={toString} />}
+        minDate={new Date()}
         isClearable={true}
-        dateFormat="MMMM d, yyyy"
-        onCalendarClose={onCalendarClose}
+        onCalendarClose={onClose}
       />
     </S.Field>
   );

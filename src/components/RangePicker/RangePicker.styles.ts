@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 
 export const Field = styled.div`
+  z-index: 3;
+
   .react-datepicker-wrapper {
     width: 100%;
   }
