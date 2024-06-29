@@ -17,7 +17,6 @@ export const InputComponent: React.ForwardRefRenderFunction<
   HTMLInputElement,
   Props
 > = ({ value, placeholder, onClick, onChange, renderValue }, ref) => {
-  console.log({ value });
   return (
     <S.Field onFocus={onClick}>
       <S.Input

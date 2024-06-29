@@ -1,25 +1,48 @@
-import { IconSearch } from '@tabler/icons-react';
+import React from 'react';
 
-import { Button } from '@/components/Button';
-import { Input } from '@/components/Input';
+import { AutoComplete } from '@/components/AutoComplete';
 import { RangePicker } from '@/components/RangePicker';
+import { DateRange } from '@/types';
 
 import * as S from './Search.styles';
 
-export const Search: React.FC = () => {
+interface SearchProps {
+  rangePickerPlaceholder?: string;
+}
+
+interface WithAutocomplete<T> {
+  onSearch(query: string): void;
+  onDateChange(range: DateRange): void;
+  autoCompletePlaceholder: string;
+  items?: T;
+}
+
+interface WithRangePicker {
+  rangePickerPlaceholder: string;
+}
+
+export const Search = <T,>({
+  onSearch,
+  onDateChange,
+  items,
+  autoCompletePlaceholder,
+  rangePickerPlaceholder,
+}: SearchProps & WithAutocomplete<T> & WithRangePicker) => {
   return (
     <S.Container>
-      <Input
-        onChange={({ target: { value } }) => console.log({ value })}
-        placeholder="Select the location"
-      />
+      {typeof onSearch === 'function' && (
+        <AutoComplete<T>
+          items={items}
+          onSearch={onSearch}
+          placeholder={autoCompletePlaceholder}
+        />
+      )}
       <RangePicker
-        placeholder="Select the dates"
-        onChange={(d) => console.log({ d })}
+        placeholder={rangePickerPlaceholder}
+        onChange={([start, end]: DateRange) =>
+          start && end && onDateChange([start, end])
+        }
       />
-      <Button>
-        <IconSearch />
-      </Button>
     </S.Container>
   );
 };

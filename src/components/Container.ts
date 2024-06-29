@@ -5,6 +5,7 @@ export const Container = styled.div<{ $noColumn?: boolean }>`
   padding-right: var(--application-inline-padding);
   padding-top: var(--application-column-padding);
   padding-bottom: var(--application-column-padding);
+  flex: 1;
 
   ${({ $noColumn }) =>
     $noColumn &&

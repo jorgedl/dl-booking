@@ -16,6 +16,7 @@ export const Field = styled.div`
 
     &--keyboard-selected {
       background-color: var(--primary);
+      color: var(--onPrimary);
 
       &:hover {
         background-color: var(--hoverPrimary);

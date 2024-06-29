@@ -14,12 +14,12 @@ const getProperty = (params?: Params): Promise<Property> => {
 
 type QueryFnType = typeof getProperty;
 
-type UseUsersOptions = {
+type UsePropertyOptions = {
   config?: QueryConfig<QueryFnType>;
   params?: Params;
 };
 
-export const useProperty = ({ config, params }: UseUsersOptions = {}) => {
+export const useProperty = ({ config, params }: UsePropertyOptions = {}) => {
   return useQuery<ExtractFnReturnType<QueryFnType>>({
     ...config,
     queryKey: ['property', params],

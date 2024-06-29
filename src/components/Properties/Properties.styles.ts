@@ -2,6 +2,20 @@ import styled from 'styled-components';
 
 export const List = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(var(--item-width), 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(var(--item-width), 1fr));
   gap: 2rem;
+`;
+
+export const SkeletonContainer = styled.div`
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+`;
+
+export const SkeletonItem = styled.div`
+  position: absolute;
+  width: 100%;
+  position: relative;
+  top: 0;
+  left: 0;
 `;

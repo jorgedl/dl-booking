@@ -1,8 +1,10 @@
 import { useParams, useNavigate } from '@tanstack/react-router';
 import { LngLat } from 'maplibre-gl';
 import React from 'react';
+import Skeleton from 'react-loading-skeleton';
 
 import { useProperty } from '@/api/useProperty';
+import { Button } from '@/components/Button';
 import { Container } from '@/components/Container';
 import { Header } from '@/components/Header';
 import { Map } from '@/components/Map';
@@ -12,7 +14,9 @@ import * as S from './Book.styles';
 export const Book: React.FC = () => {
   const { propertyId } = useParams({ from: '/book/$propertyId' });
 
-  const { data, isFetched } = useProperty({ params: { id: propertyId } });
+  const { data, isFetched, isLoading } = useProperty({
+    params: { id: propertyId },
+  });
 
   const navigate = useNavigate();
 
@@ -27,14 +31,41 @@ export const Book: React.FC = () => {
       <Header />
       <S.Container>
         <S.SidePanel>
-          <Container>
-            {data && (
-              <>
-                <S.Title>{data?.label}</S.Title>
-                <p>{data?.description}</p>
-              </>
-            )}
-          </Container>
+          {isLoading && (
+            <>
+              <S.ImageCover>
+                <Skeleton height="20rem" width="100%" />
+              </S.ImageCover>
+              <Container>
+                <S.Body>
+                  <Skeleton height={32} />
+                  <Skeleton count={2} />
+                  <Skeleton height={48} width={120} />
+                </S.Body>
+              </Container>
+            </>
+          )}
+
+          {!isLoading && (
+            <>
+              {data?.cover && (
+                <S.ImageCover>
+                  <img src={data?.cover} alt={`${data?.label} cover`} />
+                </S.ImageCover>
+              )}
+              <Container>
+                {data && (
+                  <S.Body>
+                    <S.Title>{data?.label}</S.Title>
+                    <p>{data?.description}</p>
+                    <div>
+                      <Button>Book Now</Button>
+                    </div>
+                  </S.Body>
+                )}
+              </Container>
+            </>
+          )}
         </S.SidePanel>
         <Map
           markerCoordinates={
