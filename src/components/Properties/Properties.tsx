@@ -17,8 +17,9 @@ export const Properties: React.FC<{
         new Array(12).fill(undefined).map((_, i) => (
           <S.SkeletonContainer key={`propeties-skeleton-${i}`}>
             <S.SkeletonItem>
-              <Skeleton style={{ paddingTop: '100%' }} height={'90%'} />
-              <Skeleton count={2} />
+              <Skeleton style={{ paddingTop: '95%' }} />
+              <Skeleton width={200} style={{ marginTop: '1rem' }} />
+              <Skeleton count={3} />
             </S.SkeletonItem>
           </S.SkeletonContainer>
         ))}

@@ -35,6 +35,7 @@ export const GlobalStyle = createGlobalStyle`
     --text-primary: #272a2f;
     --text-secondary: #6a6a6a;
     --outline: #e9e9e9;
+    --disabled: #60a76f;
     
     --padding-xs: 4px;
     --padding-sm: 8px;

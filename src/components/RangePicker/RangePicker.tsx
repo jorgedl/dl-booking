@@ -22,7 +22,8 @@ export const RangePicker: React.FC<{
   onChange?: (dateRange: DateRange) => void;
   placeholder: string;
   excludeDates?: string[];
-}> = ({ onChange, placeholder, excludeDates }) => {
+  defaultValue?: DateRange;
+}> = ({ onChange, placeholder, excludeDates, defaultValue }) => {
   const {
     startDate,
     endDate,
@@ -31,11 +32,13 @@ export const RangePicker: React.FC<{
     toString,
     lockedDates,
   } = useRangePicker({
+    defaultValue,
     excludeDates,
   });
 
   React.useEffect(() => {
     typeof onChange !== 'undefined' &&
+      ((startDate && endDate) || (!startDate && !endDate)) &&
       onChange([formatDate(startDate), formatDate(endDate)]);
   }, [startDate, endDate]);
 

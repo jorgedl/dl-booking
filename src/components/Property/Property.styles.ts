@@ -22,6 +22,6 @@ export const ImageContainer = styled.div`
   }
 `;
 
-export const Price = styled.div`
+export const Bottom = styled.div`
   margin-top: var(--margin-sm);
 `;

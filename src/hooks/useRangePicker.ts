@@ -3,18 +3,34 @@ import React from 'react';
 
 import { getLastAvailableDay } from '@/helpers/getLastAvailableDay'; // Importing date helper functions
 import { overlapsRange } from '@/helpers/overlapsRange';
+import { DateRange } from '@/types';
 
 const TO_STRING_FORMAT = 'MMMM d, yyyy'; // Date format for toString function
 
 const DATE_FORMAT = 'MM-dd-yyyy'; // Date format for parsing excludeDates
 
+const parseDefaultValue = (defaultValue: string | undefined) => {
+  if (defaultValue) {
+    const parsedDate = parse(defaultValue, DATE_FORMAT, new Date());
+    if (isValid(parsedDate)) {
+      return parsedDate;
+    }
+  }
+};
+
 export const useRangePicker = ({
   excludeDates,
+  defaultValue,
 }: {
   excludeDates?: string[];
+  defaultValue?: DateRange;
 }) => {
-  const [startDate, setStartDate] = React.useState<Date | undefined>();
-  const [endDate, setEndDate] = React.useState<Date | undefined>();
+  const [startDate, setStartDate] = React.useState<Date | undefined>(
+    defaultValue?.[1] ? parseDefaultValue(defaultValue?.[0]) : undefined,
+  );
+  const [endDate, setEndDate] = React.useState<Date | undefined>(
+    defaultValue?.[1] ? parseDefaultValue(defaultValue?.[1]) : undefined,
+  );
 
   // Memoized array of locked dates based on excludeDates
   const lockedDates = React.useMemo(() => {

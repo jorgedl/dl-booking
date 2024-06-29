@@ -3,6 +3,15 @@ import * as S from './Button.styles';
 export const Button: React.FC<{
   children?: React.ReactNode | string;
   className?: string;
-}> = ({ children, className }) => (
-  <S.Button className={className}>{children}</S.Button>
+  disabled?: boolean;
+  onClick?(): void;
+}> = ({ children, className, disabled, onClick }) => (
+  <S.Button
+    onKeyDown={({ key }) => key === 'Enter' && onClick && onClick()}
+    onClick={onClick}
+    className={className}
+    disabled={disabled}
+  >
+    {children}
+  </S.Button>
 );

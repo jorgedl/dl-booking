@@ -30,7 +30,7 @@ export const Map: React.FC<{ markerCoordinates?: LngLat }> = ({
     mapRef.current?.flyTo({
       center: markerCoordinates,
     });
-  }, [markerCoordinates, mapRef]);
+  }, [markerCoordinates]);
 
   return <S.MapContainer id="map" />;
 };

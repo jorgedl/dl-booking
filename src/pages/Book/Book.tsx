@@ -1,4 +1,5 @@
-import { useParams, useNavigate } from '@tanstack/react-router';
+import { useParams, useSearch, useNavigate } from '@tanstack/react-router';
+import { isValid } from 'date-fns';
 import { LngLat } from 'maplibre-gl';
 import React from 'react';
 import Skeleton from 'react-loading-skeleton';
@@ -16,6 +17,9 @@ import * as S from './Book.styles';
 export const Book: React.FC = () => {
   const { propertyId } = useParams({ from: '/book/$propertyId' });
 
+  const { startDate, endDate }: { startDate?: string; endDate?: string } =
+    useSearch({ from: '/book/$propertyId' });
+
   const { data, isFetched, isLoading } = useProperty({
     params: { id: propertyId },
   });
@@ -28,7 +32,34 @@ export const Book: React.FC = () => {
     }
   }, [isFetched, data, navigate]);
 
-  console.log({ data });
+  React.useEffect(() => {
+    if (startDate && endDate) {
+      console.log({ isValid: isValid(startDate) && isValid(endDate) });
+    }
+  }, [startDate, endDate]);
+
+  const isInvalid = React.useMemo(() => {
+    return !(startDate && endDate);
+  }, [startDate, endDate]);
+
+  const onBook = React.useCallback(() => {
+    if (isInvalid) {
+      return;
+    }
+
+    console.log({
+      id: data?.id,
+      startDate,
+      endDate,
+    });
+  }, [isInvalid]);
+
+  const markerCoordinates = React.useMemo(() => {
+    return {
+      lat: data?.lat || 0,
+      lng: data?.lng || 0,
+    } as LngLat;
+  }, [data]);
 
   return (
     <>
@@ -64,13 +95,25 @@ export const Book: React.FC = () => {
                     <p>{data?.description}</p>
                     <RangePicker
                       placeholder={`Select the dates you wish to stay in ${data.label}`}
+                      defaultValue={[startDate, endDate]}
                       onChange={([start, end]: DateRange) =>
-                        console.log([start, end])
+                        navigate({
+                          to: '/book/$propertyId',
+                          params: {
+                            propertyId: data.id,
+                          },
+                          search: {
+                            startDate: start || '',
+                            endDate: end || '',
+                          },
+                        })
                       }
                       excludeDates={data.lockedDays}
                     />
                     <div>
-                      <Button>Book Now</Button>
+                      <Button disabled={isInvalid} onClick={onBook}>
+                        Book Now
+                      </Button>
                     </div>
                   </S.Body>
                 )}
@@ -78,14 +121,7 @@ export const Book: React.FC = () => {
             </>
           )}
         </S.SidePanel>
-        <Map
-          markerCoordinates={
-            {
-              lat: data?.lat || 0,
-              lng: data?.lng || 0,
-            } as LngLat
-          }
-        />
+        <Map markerCoordinates={markerCoordinates} />
       </S.Container>
     </>
   );

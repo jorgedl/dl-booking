@@ -13,10 +13,6 @@ export const Home: React.FC = () => {
 
   const [dateRange, setDateRange] = React.useState<DateRange>();
 
-  React.useEffect(() => {
-    console.log({ dateRange });
-  }, [dateRange]);
-
   const autoComplete = useAutoComplete({
     params: {
       query,
@@ -27,10 +23,6 @@ export const Home: React.FC = () => {
   const onDateChange = React.useCallback(([start, end]: DateRange) => {
     setDateRange([start, end]);
   }, []);
-
-  React.useEffect(() => {
-    console.log({ query });
-  }, [query]);
 
   return (
     <>
