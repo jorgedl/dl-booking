@@ -290,6 +290,7 @@ export const autoCompleteProperties: any = async (params: {
 };
 
 export const fetchProperty: any = async (params: { id: string }) => {
+  console.log({ params });
   return new Promise((resolve) => {
     setTimeout(() => {
       resolve(

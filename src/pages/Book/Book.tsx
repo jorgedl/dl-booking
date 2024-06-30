@@ -10,7 +10,9 @@ import { Container } from '@/components/Container';
 import { Header } from '@/components/Header';
 import { Map } from '@/components/Map';
 import { RangePicker } from '@/components/RangePicker';
-import { DateRange } from '@/types';
+import { Title } from '@/components/Title';
+import { BookingsContext } from '@/reducers/bookings';
+import { BookingActions, DateOrRange, DateRange } from '@/types';
 
 import * as S from './Book.styles';
 
@@ -42,17 +44,11 @@ export const Book: React.FC = () => {
     return !(startDate && endDate);
   }, [startDate, endDate]);
 
-  const onBook = React.useCallback(() => {
-    if (isInvalid) {
-      return;
-    }
+  const context = React.useContext(BookingsContext);
 
-    console.log({
-      id: data?.id,
-      startDate,
-      endDate,
-    });
-  }, [isInvalid]);
+  React.useEffect(() => {
+    console.log(context?.state);
+  }, [context?.state]);
 
   const markerCoordinates = React.useMemo(() => {
     return {
@@ -60,6 +56,47 @@ export const Book: React.FC = () => {
       lng: data?.lng || 0,
     } as LngLat;
   }, [data]);
+
+  const excludeDates = React.useMemo(() => {
+    // Locked dates from server
+    if (!data) {
+      return;
+    }
+    let lockedDaysOrRanges: DateOrRange[] = [];
+    if (Array.isArray(data?.lockedDays)) {
+      lockedDaysOrRanges = [...data.lockedDays];
+    }
+
+    // Locked days from state
+    if (context?.state.bookings) {
+      const property = context?.state.bookings.filter(
+        ({ propertyId }) => propertyId === data?.id,
+      );
+      if (property) {
+        property.forEach(
+          ({ startDate, endDate }) =>
+            startDate &&
+            endDate &&
+            lockedDaysOrRanges.push([startDate, endDate]),
+        );
+      }
+    }
+
+    console.log({ lockedDaysOrRanges });
+
+    return lockedDaysOrRanges;
+  }, [data?.lockedDays, context?.state.bookings]);
+
+  const onBook = React.useCallback(async () => {
+    if (startDate && endDate && data) {
+      // On a real scenario this would be a react query mutation
+      await context?.dispatch({
+        type: BookingActions.BOOK,
+        payload: { propertyId: data.id, startDate, endDate },
+      });
+      navigate({ to: '/reservations' });
+    }
+  }, [startDate, endDate, data]);
 
   return (
     <>
@@ -91,7 +128,7 @@ export const Book: React.FC = () => {
               <Container>
                 {data && (
                   <S.Body>
-                    <S.Title>{data?.label}</S.Title>
+                    <Title>{data?.label}</Title>
                     <p>{data?.description}</p>
                     <RangePicker
                       placeholder={`Select the dates you wish to stay in ${data.label}`}
@@ -108,7 +145,7 @@ export const Book: React.FC = () => {
                           },
                         })
                       }
-                      excludeDates={data.lockedDays}
+                      excludeDates={excludeDates}
                     />
                     <div>
                       <Button disabled={isInvalid} onClick={onBook}>

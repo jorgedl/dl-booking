@@ -1,14 +1,14 @@
-import { addDays, format, isValid, parse } from 'date-fns';
+import { addDays, eachDayOfInterval, format, isValid, parse } from 'date-fns';
 import React from 'react';
 
-import { getLastAvailableDay } from '@/helpers/getLastAvailableDay'; // Importing date helper functions
+import { getLastAvailableDay } from '@/helpers/getLastAvailableDay';
 import { overlapsRange } from '@/helpers/overlapsRange';
-import { DateRange } from '@/types';
+import { DateOrRange, DateRange } from '@/types';
 
-const TO_STRING_FORMAT = 'MMMM d, yyyy'; // Date format for toString function
+const TO_STRING_FORMAT = 'MMMM d, yyyy'; // Format for displaying dates as strings
+const DATE_FORMAT = 'MM-dd-yyyy'; // Format for parsing dates
 
-const DATE_FORMAT = 'MM-dd-yyyy'; // Date format for parsing excludeDates
-
+// Helper function to parse a default value date string into a Date object
 const parseDefaultValue = (defaultValue: string | undefined) => {
   if (defaultValue) {
     const parsedDate = parse(defaultValue, DATE_FORMAT, new Date());
@@ -18,15 +18,17 @@ const parseDefaultValue = (defaultValue: string | undefined) => {
   }
 };
 
+// Custom hook for handling range picker logic
 export const useRangePicker = ({
   excludeDates,
   defaultValue,
 }: {
-  excludeDates?: string[];
+  excludeDates?: (string | DateOrRange)[];
   defaultValue?: DateRange;
 }) => {
+  // State for the start and end dates
   const [startDate, setStartDate] = React.useState<Date | undefined>(
-    defaultValue?.[1] ? parseDefaultValue(defaultValue?.[0]) : undefined,
+    defaultValue?.[0] ? parseDefaultValue(defaultValue?.[0]) : undefined,
   );
   const [endDate, setEndDate] = React.useState<Date | undefined>(
     defaultValue?.[1] ? parseDefaultValue(defaultValue?.[1]) : undefined,
@@ -34,16 +36,38 @@ export const useRangePicker = ({
 
   // Memoized array of locked dates based on excludeDates
   const lockedDates = React.useMemo(() => {
-    if (Array.isArray(excludeDates)) {
-      return excludeDates.reduce((accum: Date[], current) => {
-        const parsedDate = parse(current, DATE_FORMAT, new Date());
-        if (isValid(parsedDate)) {
-          return [...accum, parsedDate];
+    if (!Array.isArray(excludeDates)) return [];
+
+    return excludeDates.reduce((accum: Date[], dateOrRange) => {
+      const validDates: Date[] = [];
+
+      if (Array.isArray(dateOrRange)) {
+        // If dateOrRange is an array, it represents a range of dates
+        const dateIntervals = dateOrRange.map((date) => {
+          const parsedDate = parse(date, DATE_FORMAT, new Date());
+          if (isValid(parsedDate)) {
+            return parsedDate;
+          }
+        });
+
+        // Add all dates within the interval to validDates
+        if (dateIntervals[0] && dateIntervals[1]) {
+          eachDayOfInterval({
+            start: dateIntervals[0],
+            end: dateIntervals[1],
+          }).forEach((validDate) => validDates.push(validDate));
         }
-        return accum;
-      }, []);
-    }
-    return [];
+      } else {
+        // If dateOrRange is a single date, add it to validDates
+        const parsedDate = parse(dateOrRange, DATE_FORMAT, new Date());
+        if (isValid(parsedDate)) {
+          validDates.push(parsedDate);
+        }
+      }
+
+      // Accumulate all valid dates
+      return validDates.length ? [...accum, ...validDates] : accum;
+    }, []);
   }, [excludeDates]);
 
   // Callback function for handling date range changes
@@ -61,8 +85,6 @@ export const useRangePicker = ({
         if (isOverlapping) {
           // Adjust the end date to the last available day before overlapping
           validEnd = getLastAvailableDay(start, lockedDates);
-
-          // If no valid end date, clear the start date
           if (!validEnd) {
             validStart = null;
           }
@@ -79,7 +101,7 @@ export const useRangePicker = ({
   // Function to handle onClose event, adjusting the end date if necessary
   const onClose = () => {
     if (startDate && !endDate) {
-      startDate && onChange([startDate, addDays(startDate, 1)]);
+      onChange([startDate, addDays(startDate, 1)]);
     }
   };
 
@@ -87,8 +109,10 @@ export const useRangePicker = ({
   const toString = () => {
     if (startDate) {
       const startString = format(startDate, TO_STRING_FORMAT);
-      const endString = endDate && format(endDate, TO_STRING_FORMAT);
-      return `${startString} - ${endString || 'Check-out'}`;
+      const endString = endDate
+        ? format(endDate, TO_STRING_FORMAT)
+        : 'Check-out';
+      return `${startString} - ${endString}`;
     }
     return '';
   };

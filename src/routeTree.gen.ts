@@ -17,10 +17,16 @@ import { Route as BookIndexImport } from './routes/book/index'
 
 // Create Virtual Routes
 
+const ReservationsLazyImport = createFileRoute('/reservations')()
 const IndexLazyImport = createFileRoute('/')()
 const BookPropertyIdLazyImport = createFileRoute('/book/$propertyId')()
 
 // Create/Update Routes
+
+const ReservationsLazyRoute = ReservationsLazyImport.update({
+  path: '/reservations',
+  getParentRoute: () => rootRoute,
+} as any).lazy(() => import('./routes/reservations.lazy').then((d) => d.Route))
 
 const IndexLazyRoute = IndexLazyImport.update({
   path: '/',
@@ -50,6 +56,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexLazyImport
       parentRoute: typeof rootRoute
     }
+    '/reservations': {
+      id: '/reservations'
+      path: '/reservations'
+      fullPath: '/reservations'
+      preLoaderRoute: typeof ReservationsLazyImport
+      parentRoute: typeof rootRoute
+    }
     '/book/$propertyId': {
       id: '/book/$propertyId'
       path: '/book/$propertyId'
@@ -71,6 +84,7 @@ declare module '@tanstack/react-router' {
 
 export const routeTree = rootRoute.addChildren({
   IndexLazyRoute,
+  ReservationsLazyRoute,
   BookPropertyIdLazyRoute,
   BookIndexRoute,
 })
@@ -84,12 +98,16 @@ export const routeTree = rootRoute.addChildren({
       "filePath": "__root.tsx",
       "children": [
         "/",
+        "/reservations",
         "/book/$propertyId",
         "/book/"
       ]
     },
     "/": {
       "filePath": "index.lazy.tsx"
+    },
+    "/reservations": {
+      "filePath": "reservations.lazy.tsx"
     },
     "/book/$propertyId": {
       "filePath": "book/$propertyId.lazy.tsx"

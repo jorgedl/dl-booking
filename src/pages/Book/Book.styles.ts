@@ -26,10 +26,6 @@ export const SidePanel = styled.div`
   }
 `;
 
-export const Title = styled.h1`
-  font-size: 1.5rem;
-`;
-
 export const ImageCover = styled.div`
   max-height: 20rem;
   overflow: hidden;

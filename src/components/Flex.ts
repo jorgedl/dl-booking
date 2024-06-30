@@ -1,7 +1,7 @@
 import styled, { css } from 'styled-components';
 
 export const Flex = styled.div<{
-  $justify?: 'space-between';
+  $justify?: 'space-between' | 'center' | 'end';
   $align?: 'center';
 }>`
   ${({ $justify }) =>

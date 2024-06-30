@@ -1,6 +1,6 @@
-export interface BookingOption {
+export interface Booked {
   id: string;
-  lat: number;
-  lng: number;
-  label: string;
+  propertyId: string;
+  startDate: string;
+  endDate: string;
 }

@@ -9,6 +9,10 @@ export const Logo = styled.div`
 
 export const Nav = styled.nav`
   border-bottom: solid var(--outline) 1px;
+  position: sticky;
+  top: 0;
+  z-index: 4;
+  background: var(--background);
 `;
 
 export const InnerNav = styled.nav`

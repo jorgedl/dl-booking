@@ -6,7 +6,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 
 import { Input } from '@/components/Input';
 import { useRangePicker } from '@/hooks/useRangePicker';
-import { DateRange } from '@/types';
+import { DateOrRange, DateRange } from '@/types';
 
 import * as S from './RangePicker.styles';
 
@@ -21,7 +21,7 @@ const formatDate = (date: Date | undefined) => {
 export const RangePicker: React.FC<{
   onChange?: (dateRange: DateRange) => void;
   placeholder: string;
-  excludeDates?: string[];
+  excludeDates?: DateOrRange[];
   defaultValue?: DateRange;
 }> = ({ onChange, placeholder, excludeDates, defaultValue }) => {
   const {
@@ -38,7 +38,6 @@ export const RangePicker: React.FC<{
 
   React.useEffect(() => {
     typeof onChange !== 'undefined' &&
-      ((startDate && endDate) || (!startDate && !endDate)) &&
       onChange([formatDate(startDate), formatDate(endDate)]);
   }, [startDate, endDate]);
 

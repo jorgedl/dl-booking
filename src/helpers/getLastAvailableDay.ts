@@ -1,4 +1,4 @@
-import { isAfter, isBefore, subDays } from 'date-fns';
+import { isAfter, subDays } from 'date-fns';
 
 /**
  * Returns the last available day before the start of a locked date.
@@ -10,12 +10,11 @@ export const getLastAvailableDay = (
   start: Date,
   locked: Date[],
 ): Date | null => {
-  const lastAvailable = locked.reduce((accum: Date | null, current) => {
-    if (!accum || isBefore(current, accum)) {
-      return current;
-    }
-    return accum;
-  }, null);
+  const filteredLocked = locked.filter((date) => isAfter(date, start));
+
+  const [lastAvailable] = filteredLocked.sort(
+    (a, b) => a.getTime() - b.getTime(),
+  );
 
   // Check if there is a day before the last available locked date
   const yesterday = lastAvailable ? subDays(lastAvailable, 1) : null;

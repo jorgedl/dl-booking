@@ -1,14 +1,24 @@
 import React, { createContext, useReducer, Dispatch } from 'react';
+import { v4 as uuid } from 'uuid';
 
-import { Actions } from '@/types/actions';
+import { Booked } from '@/types';
+import { BookingActions } from '@/types/actions';
 
 interface State {
-  bookings: any;
+  bookings: Booked[];
 }
 
-interface Action {
-  type: Actions;
-}
+type NewBooking = Omit<Booked, 'id'>;
+
+type Action =
+  | {
+      type: BookingActions.BOOK;
+      payload: NewBooking;
+    }
+  | {
+      type: BookingActions.UNBOOK;
+      payload: string;
+    };
 
 type ContextType = {
   state: State;
@@ -16,16 +26,36 @@ type ContextType = {
 };
 
 const initialState: State = {
-  bookings: {},
+  bookings: [],
 };
 
 // Criar o contexto com um valor inicial opcional
-const StateContext = createContext<ContextType | undefined>(undefined);
+export const BookingsContext = createContext<ContextType | null>(null);
 
-function reducer(state: any, action: any) {
+const add = (bookingState: State['bookings'], booked: NewBooking) => {
+  const newBooking = {
+    ...booked,
+    id: uuid(),
+  };
+  return [...bookingState, newBooking];
+};
+
+const remove = (bookingState: State['bookings'], bookingId: string) => {
+  return bookingState.filter(({ id }) => id !== bookingId);
+};
+
+function reducer(state: State, action: Action): State {
   switch (action.type) {
-    case Actions.LOAD:
-      return { ...state };
+    case BookingActions.BOOK:
+      return {
+        ...state,
+        bookings: add(state.bookings, action.payload),
+      };
+    case BookingActions.UNBOOK:
+      return {
+        ...state,
+        bookings: remove(state.bookings, action.payload),
+      };
     default:
       return state;
   }
@@ -37,8 +67,8 @@ export const BookingsProvider: React.FC<{ children: React.ReactNode }> = ({
   const [state, dispatch] = useReducer(reducer, initialState);
 
   return (
-    <StateContext.Provider value={{ state, dispatch }}>
+    <BookingsContext.Provider value={{ state, dispatch }}>
       {children}
-    </StateContext.Provider>
+    </BookingsContext.Provider>
   );
 };
