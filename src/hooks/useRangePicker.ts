@@ -34,6 +34,18 @@ export const useRangePicker = ({
     defaultValue?.[1] ? parseDefaultValue(defaultValue?.[1]) : undefined,
   );
 
+  // If initial startDate and endDate are overlapping with locked dates, unset them
+  React.useEffect(() => {
+    if (
+      startDate &&
+      endDate &&
+      overlapsRange(startDate, endDate, lockedDates)
+    ) {
+      setStartDate(undefined);
+      setEndDate(undefined);
+    }
+  }, []);
+
   // Memoized array of locked dates based on excludeDates
   const lockedDates = React.useMemo(() => {
     if (!Array.isArray(excludeDates)) return [];

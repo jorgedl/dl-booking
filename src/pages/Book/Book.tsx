@@ -40,10 +40,6 @@ export const Book: React.FC = () => {
     }
   }, [startDate, endDate]);
 
-  const isInvalid = React.useMemo(() => {
-    return !(startDate && endDate);
-  }, [startDate, endDate]);
-
   const context = React.useContext(BookingsContext);
 
   React.useEffect(() => {
@@ -82,10 +78,16 @@ export const Book: React.FC = () => {
       }
     }
 
-    console.log({ lockedDaysOrRanges });
-
     return lockedDaysOrRanges;
-  }, [data?.lockedDays, context?.state.bookings]);
+  }, [data, context?.state.bookings]);
+
+  const isInvalid = React.useMemo(() => {
+    return !(startDate && endDate);
+  }, [startDate, endDate]);
+
+  React.useEffect(() => {
+    console.log({ excludeDates });
+  }, [excludeDates]);
 
   const onBook = React.useCallback(async () => {
     if (startDate && endDate && data) {
@@ -96,7 +98,7 @@ export const Book: React.FC = () => {
       });
       navigate({ to: '/reservations' });
     }
-  }, [startDate, endDate, data]);
+  }, [startDate, endDate, data, context, navigate]);
 
   return (
     <>
