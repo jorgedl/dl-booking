@@ -1,6 +1,6 @@
 import { useProperty } from '@/api/useProperty';
 
-// import * as S from './ReservationDetail.styles';
+import * as S from './ReservationDetail.styles';
 
 export const ReservationDetail: React.FC<{
   propertyId: string;
@@ -15,15 +15,13 @@ export const ReservationDetail: React.FC<{
   if (error) return <div>Error loading property details</div>;
 
   return (
-    <div>
-      <h3>{`${startDate} - ${endDate}`}</h3>
-      {data && (
+    data && (
+      <div>
+        <h3>{`${data.label} ${startDate} - ${endDate}`}</h3>
         <div>
-          <img src={data.cover} alt={`${data.label} cover`} />
-          <p>Property Name: {data.label}</p>
-          <p>Property Description: {data.description}</p>
+          <S.Cover src={data.cover} alt={`${data.label} cover`} />
         </div>
-      )}
-    </div>
+      </div>
+    )
   );
 };

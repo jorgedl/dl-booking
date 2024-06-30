@@ -52,7 +52,7 @@ export const RangePicker: React.FC<{
         selectsRange
         selectsDisabledDaysInRange
         placeholderText={placeholder}
-        customInput={<Input renderValue={toString} />}
+        customInput={<Input renderValue={toString} readOnly />}
         minDate={new Date()}
         isClearable={true}
         onCalendarClose={onClose}

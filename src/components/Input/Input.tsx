@@ -11,15 +11,17 @@ interface Props {
   onKeyDown?(e: React.KeyboardEvent<HTMLInputElement>): void;
   ref?: React.RefObject<HTMLInputElement>;
   placeholder?: string;
+  readOnly?: boolean;
 }
 
 export const InputComponent: React.ForwardRefRenderFunction<
   HTMLInputElement,
   Props
-> = ({ value, placeholder, onClick, onChange, renderValue }, ref) => {
+> = ({ value, placeholder, onClick, onChange, renderValue, readOnly }, ref) => {
   return (
     <S.Field onFocus={onClick}>
       <S.Input
+        readOnly={readOnly}
         placeholder={placeholder}
         value={typeof renderValue === 'function' ? renderValue(value) : value}
         ref={ref}
