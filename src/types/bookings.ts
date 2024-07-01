@@ -10,3 +10,7 @@ export interface Booking {
   endDate: string;
   status: BookingStatus;
 }
+
+export type NewBooking = Omit<Booking, 'id' | 'status'>;
+
+export type EditingBooking = Omit<Booking, 'status' | 'propertyId'>;

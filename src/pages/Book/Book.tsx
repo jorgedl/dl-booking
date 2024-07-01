@@ -34,11 +34,11 @@ export const Book: React.FC = () => {
     }
   }, [isFetched, data, navigate]);
 
-  const context = React.useContext(BookingsContext);
+  const bookingsContext = React.useContext(BookingsContext);
 
   React.useEffect(() => {
-    console.log(context?.state);
-  }, [context?.state]);
+    console.log(bookingsContext?.state);
+  }, [bookingsContext?.state]);
 
   const markerCoordinates = React.useMemo(() => {
     return {
@@ -48,7 +48,7 @@ export const Book: React.FC = () => {
   }, [data]);
 
   // In a production scenario these dates should be calculated and retrieved by the server. I'm using memoized objects to mock it in this project
-  const excludeDates = useLockedDays(data, context?.state.bookings);
+  const excludeDates = useLockedDays(data, bookingsContext?.state.bookings);
 
   const isInvalid = React.useMemo(() => {
     return !(startDate && endDate);
@@ -57,13 +57,13 @@ export const Book: React.FC = () => {
   const onBook = React.useCallback(async () => {
     if (startDate && endDate && data) {
       // On a real scenario this would be a react query mutation
-      await context?.dispatch({
+      await bookingsContext?.dispatch({
         type: BookingActions.BOOK,
         payload: { propertyId: data.id, startDate, endDate },
       });
       navigate({ to: '/reservations' });
     }
-  }, [startDate, endDate, data, context, navigate]);
+  }, [startDate, endDate, data, bookingsContext, navigate]);
 
   return (
     <>

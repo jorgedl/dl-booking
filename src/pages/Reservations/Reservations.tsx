@@ -15,7 +15,7 @@ import { Booking, BookingActions, BookingStatus, DateRange } from '@/types';
 // import * as S from './Reservations.styles';
 
 export const Reservations: React.FC = () => {
-  const context = React.useContext(BookingsContext);
+  const bookingsContext = React.useContext(BookingsContext);
 
   const [newDates, setNewDates] = React.useState<DateRange>([
     undefined,
@@ -31,7 +31,7 @@ export const Reservations: React.FC = () => {
   });
 
   // Once again generating memoized invalid dates. This should be done by the server
-  const excludeDates = useLockedDays(data, context?.state.bookings);
+  const excludeDates = useLockedDays(data, bookingsContext?.state.bookings);
 
   return (
     <>
@@ -40,8 +40,8 @@ export const Reservations: React.FC = () => {
         <Flex $vertical $gap="medium">
           <Title>My reservations</Title>
           <Flex $vertical $gap="medium">
-            {Array.isArray(context?.state.bookings) &&
-              context?.state.bookings.map((booked) => (
+            {Array.isArray(bookingsContext?.state.bookings) &&
+              bookingsContext?.state.bookings.map((booked) => (
                 <ReservationDetails
                   isLoading={isLoading}
                   key={booked.id}
@@ -56,7 +56,7 @@ export const Reservations: React.FC = () => {
                             <Button
                               type="text"
                               onClick={() =>
-                                context.dispatch({
+                                bookingsContext.dispatch({
                                   type: BookingActions.UNBOOK,
                                   payload: booked.id,
                                 })
@@ -87,7 +87,7 @@ export const Reservations: React.FC = () => {
                               onClick={() => {
                                 newDates[0] &&
                                   newDates[1] &&
-                                  context.dispatch({
+                                  bookingsContext.dispatch({
                                     type: BookingActions.EDIT,
                                     payload: {
                                       id: editing.id,
@@ -108,8 +108,8 @@ export const Reservations: React.FC = () => {
                   }}
                 />
               ))}
-            {Array.isArray(context?.state.bookings) &&
-              context?.state.bookings.length === 0 &&
+            {Array.isArray(bookingsContext?.state.bookings) &&
+              bookingsContext?.state.bookings.length === 0 &&
               'No reservations found.'}
           </Flex>
         </Flex>

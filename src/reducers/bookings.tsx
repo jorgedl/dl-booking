@@ -1,16 +1,12 @@
 import React, { createContext, useReducer, Dispatch } from 'react';
 import { v4 as uuid } from 'uuid';
 
-import { Booking, BookingStatus } from '@/types';
+import { Booking, BookingStatus, EditingBooking, NewBooking } from '@/types';
 import { BookingActions } from '@/types/actions';
 
 interface State {
   bookings: Booking[];
 }
-
-type NewBooking = Omit<Booking, 'id' | 'status'>;
-
-type EditingBooking = Omit<Booking, 'status' | 'propertyId'>;
 
 type Action =
   | {

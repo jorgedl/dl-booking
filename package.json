@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "vitest run",
+    "test": "vitest run src/ && playwright test",
+    "test:e2e": "playwright test",
+    "test:e2e:report": "playwright show-report",
     "dev": "vite",
     "build": "vite build",
     "serve": "vite preview",
@@ -21,6 +23,7 @@
   },
   "homepage": "https://github.com/jorgedl/dl-booking#readme",
   "devDependencies": {
+    "@playwright/test": "^1.45.0",
     "@tanstack/router-devtools": "^1.40.0",
     "@tanstack/router-plugin": "^1.40.3",
     "@types/node": "^20.14.9",
@@ -36,6 +39,7 @@
     "eslint-plugin-react": "^7.34.3",
     "eslint-plugin-react-hooks": "^4.6.2",
     "jsdom": "^24.1.0",
+    "playwright": "^1.45.0",
     "prettier": "^3.3.2",
     "typescript": "^5.5.2",
     "vite": "^5.3.2",
