@@ -1,6 +1,5 @@
 import React from 'react';
 
-import { useProperty } from '@/api/useProperty';
 import { Button } from '@/components/Button';
 import { Container } from '@/components/Container';
 import { Flex } from '@/components/Flex';
@@ -8,11 +7,12 @@ import { Header } from '@/components/Header';
 import { RangePicker } from '@/components/RangePicker';
 import { ReservationDetails } from '@/components/ReservationDetails';
 import { Title } from '@/components/Title';
+import { useProperty } from '@/hooks/api/useProperty';
 import { useLockedDays } from '@/hooks/useLockedDays';
 import { BookingsContext } from '@/reducers/bookings';
 import { Booking, BookingActions, BookingStatus, DateRange } from '@/types';
 
-// import * as S from './Reservations.styles';
+import * as S from './Reservations.styles';
 
 export const Reservations: React.FC = () => {
   const bookingsContext = React.useContext(BookingsContext);
@@ -39,7 +39,7 @@ export const Reservations: React.FC = () => {
       <Container>
         <Flex $vertical $gap="medium">
           <Title>My reservations</Title>
-          <Flex $vertical $gap="medium">
+          <S.List>
             {Array.isArray(bookingsContext?.state.bookings) &&
               bookingsContext?.state.bookings.map((booked) => (
                 <ReservationDetails
@@ -54,7 +54,7 @@ export const Reservations: React.FC = () => {
                         {!(editing?.id === booked.id) && (
                           <Flex $gap="medium">
                             <Button
-                              type="text"
+                              type="warning"
                               onClick={() =>
                                 bookingsContext.dispatch({
                                   type: BookingActions.UNBOOK,
@@ -83,7 +83,7 @@ export const Reservations: React.FC = () => {
                               onChange={setNewDates}
                             />
                             <Button
-                              type="text"
+                              type="primary"
                               onClick={() => {
                                 newDates[0] &&
                                   newDates[1] &&
@@ -111,7 +111,7 @@ export const Reservations: React.FC = () => {
             {Array.isArray(bookingsContext?.state.bookings) &&
               bookingsContext?.state.bookings.length === 0 &&
               'No reservations found.'}
-          </Flex>
+          </S.List>
         </Flex>
       </Container>
     </>

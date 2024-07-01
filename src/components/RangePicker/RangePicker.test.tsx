@@ -1,6 +1,6 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { format, toDate } from 'date-fns';
+import { format } from 'date-fns';
 
 import { RangePicker } from './RangePicker';
 
@@ -50,13 +50,13 @@ describe('RangePicker', () => {
     await user.click(input);
 
     // Select start date
-    const startDate = toDate(new Date('2024-01-01T00:00:00'));
+    const startDate = new Date('2024-01-01T00:00:00');
     const startDateString = formatDate(startDate);
 
     await user.click(screen.getByLabelText('Choose Monday, January 1st, 2024'));
 
     // Select end date
-    const endDate = toDate(new Date('2024-01-10T00:00:00'));
+    const endDate = new Date('2024-01-10T00:00:00');
     const endDateString = formatDate(endDate);
     await user.click(
       screen.getByLabelText('Choose Wednesday, January 10th, 2024'),

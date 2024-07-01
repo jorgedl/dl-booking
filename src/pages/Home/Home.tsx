@@ -1,11 +1,11 @@
 import React from 'react';
 
-import { useAutoComplete } from '@/api/useAutoComplete';
 // import { useProperties } from '@/api/useProperties';
 import { Container } from '@/components/Container';
 import { Header } from '@/components/Header';
 import { Properties } from '@/components/Properties';
 import { Search } from '@/components/Search';
+import { useAutoComplete } from '@/hooks/api/useAutoComplete';
 import { DateRange, type Properties as PropertiesType } from '@/types';
 
 export const Home: React.FC = () => {

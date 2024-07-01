@@ -1,3 +1,5 @@
+import { ButtonTypes } from '@/types';
+
 import * as S from './Button.styles';
 
 export const Button: React.FC<{
@@ -5,7 +7,7 @@ export const Button: React.FC<{
   className?: string;
   disabled?: boolean;
   onClick?(): void;
-  type?: 'text' | 'primary';
+  type?: ButtonTypes;
 }> = ({ children, className, disabled, onClick, type }) => (
   <S.Button
     onKeyDown={({ key }) => key === 'Enter' && onClick && onClick()}

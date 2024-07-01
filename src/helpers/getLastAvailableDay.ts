@@ -20,5 +20,6 @@ export const getLastAvailableDay = (
   const yesterday = lastAvailable ? subDays(lastAvailable, 1) : null;
 
   // Return yesterday if it's after the start date, otherwise return null
+
   return yesterday && isAfter(yesterday, start) ? yesterday : null;
 };

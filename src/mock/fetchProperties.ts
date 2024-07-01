@@ -23,6 +23,8 @@ export const mockProperties: Property[] = [
       '07-04-2024',
       '07-05-2024',
     ],
+    rating: 4,
+    reviewCount: 120,
   },
   {
     id: '2a9f9fba-4d3b-4b9e-9e5d-9f8b7e2d3c6e',
@@ -35,6 +37,8 @@ export const mockProperties: Property[] = [
     price: 300,
     description:
       'Countryside Farmhouse is a serene farmhouse nestled in the countryside, featuring lush gardens, peaceful surroundings, and the charm of rural living.',
+    rating: 5,
+    reviewCount: 90,
   },
   {
     id: '3b7e1c2d-4d3b-4a7e-8e9b-2a1d3c6e9f5d',
@@ -47,6 +51,8 @@ export const mockProperties: Property[] = [
     price: 400,
     description:
       'Downtown Apartment is a chic urban apartment located in the heart of the city, close to all major attractions, dining, and entertainment. Perfect for a vibrant city experience.',
+    rating: 4,
+    reviewCount: 150,
   },
   {
     id: '4c6d1a2b-4d3b-4b8e-9e5d-8f7b2d3c6e9f',
@@ -59,6 +65,8 @@ export const mockProperties: Property[] = [
     price: 350,
     description:
       'City View Loft is a modern loft apartment with stunning city views, offering a perfect blend of comfort and style for your urban getaway.',
+    rating: 3,
+    reviewCount: 75,
   },
   {
     id: '5d7e1b2c-4d3b-4a8e-9e5d-9f6b3e2d1c4f',
@@ -71,6 +79,8 @@ export const mockProperties: Property[] = [
     price: 320,
     description:
       'Metropolitan Suite is a luxurious suite located in the bustling city center, offering top-notch amenities and easy access to shopping, dining, and entertainment.',
+    rating: 5,
+    reviewCount: 200,
   },
   {
     id: '6e8f1c2d-4d3b-4b7e-8e9b-2a9d3c6e9f7d',
@@ -83,6 +93,8 @@ export const mockProperties: Property[] = [
     price: 280,
     description:
       'Rustic Farm Retreat is a charming farmhouse offering a peaceful escape from the city, with beautiful gardens, cozy interiors, and a taste of rural life.',
+    rating: 4,
+    reviewCount: 60,
   },
   {
     id: '7f9a1d2c-4d3b-4b9e-8e9b-3a2d3c6e9f8e',
@@ -95,6 +107,8 @@ export const mockProperties: Property[] = [
     price: 450,
     description:
       'Ocean Breeze Villa is a luxurious beachside villa with breathtaking ocean views, private beach access, and high-end amenities for an unforgettable seaside vacation.',
+    rating: 5,
+    reviewCount: 110,
   },
   {
     id: '8a1b1e2c-4d3b-4b9e-9e5d-2f6b3d7c6e9e',
@@ -107,6 +121,8 @@ export const mockProperties: Property[] = [
     price: 380,
     description:
       'Seaside Cottage is a cozy beach cottage perfect for a relaxing getaway, featuring beautiful ocean views, a comfortable interior, and easy beach access.',
+    rating: 4,
+    reviewCount: 140,
   },
   {
     id: '9b2c1d3a-4d3b-4a8e-8e9b-3a1d3c6e9f7b',
@@ -119,6 +135,8 @@ export const mockProperties: Property[] = [
     price: 220,
     description:
       'Mountain Cabin Retreat is a cozy cabin nestled in the woods, offering a tranquil escape with rustic charm, a fireplace, and proximity to hiking trails.',
+    rating: 3,
+    reviewCount: 80,
   },
   {
     id: '10c3d1a2-4d3b-4b9e-9e5d-1a6b3e2d4c7f',
@@ -131,6 +149,8 @@ export const mockProperties: Property[] = [
     price: 410,
     description:
       'Coastal Paradise is a stunning beach property with breathtaking ocean views, private beach access, and luxurious amenities for a perfect seaside retreat.',
+    rating: 5,
+    reviewCount: 190,
   },
   {
     id: '11d4e1a3-4d3b-4b9e-8e9b-2a3d4c6e9f5b',
@@ -143,6 +163,8 @@ export const mockProperties: Property[] = [
     price: 340,
     description:
       'Vineyard Haven is a luxurious vineyard estate, offering panoramic views of the vineyards, wine tasting experiences, and elegant accommodations.',
+    rating: 4,
+    reviewCount: 130,
   },
   {
     id: '12e5f1b4-4d3b-4a9e-9e5d-1a2b3c6e9f8c',
@@ -155,6 +177,8 @@ export const mockProperties: Property[] = [
     price: 360,
     description:
       'Grapevine Retreat is a beautiful vineyard property offering stunning vineyard views, comfortable accommodations, and a peaceful setting for a relaxing getaway.',
+    rating: 5,
+    reviewCount: 100,
   },
   {
     id: '13f6a1c5-4d3b-4b9e-8e9b-2f3d4c6e1b7e',
@@ -167,6 +191,8 @@ export const mockProperties: Property[] = [
     price: 310,
     description:
       'Lakeside Getaway is a serene lakeside property offering stunning water views, private dock access, and a perfect getaway for water sports and relaxation.',
+    rating: 4,
+    reviewCount: 170,
   },
   {
     id: '14a7b1d6-4d3b-4a8e-9e5d-3a1b2c4e5d9f',
@@ -179,6 +205,8 @@ export const mockProperties: Property[] = [
     price: 300,
     description:
       'Urban Loft is a stylish loft apartment located in the heart of the city, offering modern amenities, stunning views, and easy access to city attractions.',
+    rating: 3,
+    reviewCount: 120,
   },
   {
     id: '15b8c1e7-4d3b-4b9e-8e9b-2a1d3c6e4f7b',
@@ -191,6 +219,8 @@ export const mockProperties: Property[] = [
     price: 370,
     description:
       'Lakeview Villa is a beautiful lakeside villa offering stunning water views, luxurious accommodations, and private dock access for an unforgettable lakeside retreat.',
+    rating: 5,
+    reviewCount: 140,
   },
   {
     id: '16c9d1f8-4d3b-4a8e-9e5d-1a2b3c6e4f8c',
@@ -203,6 +233,8 @@ export const mockProperties: Property[] = [
     price: 330,
     description:
       'Tranquil Lake House is a serene lakeside property offering beautiful water views, private dock access, and comfortable accommodations for a relaxing stay.',
+    rating: 4,
+    reviewCount: 90,
   },
   {
     id: '17d1a1b9-4d3b-4b9e-8e9b-3a1d4c5e2f6e',
@@ -215,6 +247,8 @@ export const mockProperties: Property[] = [
     price: 420,
     description:
       'Seaside Escape is a luxurious beachside property offering stunning ocean views, direct beach access, and high-end amenities for an unforgettable seaside vacation.',
+    rating: 5,
+    reviewCount: 110,
   },
   {
     id: '18e2b1c1-4d3b-4a8e-9e5d-1a3d4c6e2b7f',
@@ -227,6 +261,8 @@ export const mockProperties: Property[] = [
     price: 500,
     description:
       'Luxe Retreat is a luxurious property featuring high-end amenities, exquisite interiors, and premium services for an exclusive and lavish stay.',
+    rating: 5,
+    reviewCount: 250,
   },
   {
     id: '19f3c1d2-4d3b-4b9e-8e9b-2a1d3c4e2b8c',
@@ -239,6 +275,8 @@ export const mockProperties: Property[] = [
     price: 390,
     description:
       'Beachfront Paradise is a stunning beach property offering breathtaking ocean views, private beach access, and luxurious amenities for the perfect seaside retreat.',
+    rating: 5,
+    reviewCount: 160,
   },
   {
     id: '20a4d1e3-4d3b-4a8e-9e5d-1a2b3c4e2f9d',
@@ -251,6 +289,8 @@ export const mockProperties: Property[] = [
     price: 310,
     description:
       'City Lights Apartment is a chic urban apartment located in the heart of the city, offering modern amenities, stunning city views, and easy access to all major attractions.',
+    rating: 4,
+    reviewCount: 130,
   },
 ];
 

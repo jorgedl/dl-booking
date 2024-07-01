@@ -9,6 +9,8 @@ export const Property: React.FC<PropertyType> = ({
   label,
   price,
   description,
+  reviewCount,
+  rating,
 }) => {
   return (
     <div>
@@ -23,7 +25,7 @@ export const Property: React.FC<PropertyType> = ({
             style: 'currency',
             currency: 'USD',
           })}
-          <Rating count={2} />
+          <Rating rating={rating} count={reviewCount} />
         </Flex>
       </S.Bottom>
     </div>

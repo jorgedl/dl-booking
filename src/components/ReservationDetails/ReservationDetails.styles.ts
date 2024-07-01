@@ -6,7 +6,12 @@ export const Container = styled.div`
   padding: var(--padding-md);
 `;
 
-export const Cover = styled.img`
+export const Cover = styled.div`
   width: 100%;
-  max-width: 20rem;
+  max-height: 15rem;
+  overflow: hidden;
+
+  img {
+    width: 100%;
+  }
 `;

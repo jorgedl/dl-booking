@@ -1,6 +1,6 @@
 import { Link } from '@tanstack/react-router';
 
-import UfoIcon from '@/assets/ufo.svg?react';
+import UfoIcon from '@/assets/travel.svg?react';
 import { Container } from '@/components/Container';
 import { Flex } from '@/components/Flex';
 

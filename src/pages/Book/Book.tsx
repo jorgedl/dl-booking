@@ -3,13 +3,15 @@ import { LngLat } from 'maplibre-gl';
 import React from 'react';
 import Skeleton from 'react-loading-skeleton';
 
-import { useProperty } from '@/api/useProperty';
 import { Button } from '@/components/Button';
 import { Container } from '@/components/Container';
+import { Flex } from '@/components/Flex';
 import { Header } from '@/components/Header';
 import { Map } from '@/components/Map';
 import { RangePicker } from '@/components/RangePicker';
+import { Rating } from '@/components/Rating';
 import { Title } from '@/components/Title';
+import { useProperty } from '@/hooks/api/useProperty';
 import { useLockedDays } from '@/hooks/useLockedDays';
 import { BookingsContext } from '@/reducers/bookings';
 import { BookingActions, DateRange } from '@/types';
@@ -91,7 +93,10 @@ export const Book: React.FC = () => {
               <Container>
                 {data && (
                   <S.Body>
-                    <Title>{data?.label}</Title>
+                    <Flex $justify="space-between">
+                      <Title>{data.label}</Title>
+                      <Rating rating={data.rating} count={data.reviewCount} />
+                    </Flex>
                     <p>{data?.description}</p>
                     <RangePicker
                       placeholder={`Select the dates you wish to stay in ${data.label}`}
@@ -111,7 +116,11 @@ export const Book: React.FC = () => {
                       excludeDates={excludeDates}
                     />
                     <div>
-                      <Button disabled={isInvalid} onClick={onBook}>
+                      <Button
+                        type="primary"
+                        disabled={isInvalid}
+                        onClick={onBook}
+                      >
                         Book Now
                       </Button>
                     </div>

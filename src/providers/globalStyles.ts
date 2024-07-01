@@ -1,4 +1,11 @@
 import { createGlobalStyle } from 'styled-components';
+import tinycolor from 'tinycolor2';
+
+const colors = {
+  primary: tinycolor('#00ab25'),
+  warning: tinycolor('#d51a1a'),
+  dark: tinycolor('#272a2f'),
+};
 
 export const GlobalStyle = createGlobalStyle`
   body {
@@ -31,11 +38,15 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   :root {
-    --primary: #00ab25;
-    --hoverPrimary: #008b1e;
+    --primary: ${colors.primary.toString()};
+    --hoverPrimary: ${colors.primary.darken(10).toString()};
+
+    --warning: ${colors.warning.toString()};
+    --hoverWarning: ${colors.warning.darken(10).toString()};
+
     --onPrimary: #FFF;
-    --text-primary: #272a2f;
-    --text-secondary: #6a6a6a;
+    --text-primary: ${colors.dark.toString()};
+    --text-secondary: ${colors.dark.lighten(30).toString()};
     --outline: #e9e9e9;
     --disabled: #60a76f;
     --background: #FFF;

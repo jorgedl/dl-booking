@@ -8,6 +8,8 @@ export interface Property {
   lng: number;
   category: string;
   lockedDays?: string[];
+  rating: number;
+  reviewCount: number;
 }
 
 export type Properties = Property[];
