@@ -18,6 +18,14 @@ type Action =
   | {
       type: BookingActions.UNBOOK;
       payload: string;
+    }
+  | {
+      type: BookingActions.EDIT;
+      payload: {
+        id: string;
+        startDate: string;
+        endDate: string;
+      };
     };
 
 type ContextType = {
@@ -55,6 +63,20 @@ function reducer(state: State, action: Action): State {
       return {
         ...state,
         bookings: remove(state.bookings, action.payload),
+      };
+    case BookingActions.EDIT:
+      return {
+        ...state,
+        bookings: state.bookings.map((booking) => {
+          if (booking.id === action.payload.id) {
+            return {
+              ...booking,
+              startDate: action.payload.startDate,
+              endDate: action.payload.endDate,
+            };
+          }
+          return booking;
+        }),
       };
     default:
       return state;

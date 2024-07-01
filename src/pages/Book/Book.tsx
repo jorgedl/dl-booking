@@ -53,6 +53,7 @@ export const Book: React.FC = () => {
     } as LngLat;
   }, [data]);
 
+  // In a production scenario these dates should be calculated and retrieved by the server. I'm using memoized objects to mock it in this project
   const excludeDates = React.useMemo(() => {
     // Locked dates from server
     if (!data) {

@@ -5,12 +5,11 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
 import { Input } from '@/components/Input';
+import { DATE_FORMAT } from '@/helpers/parseDate';
 import { useRangePicker } from '@/hooks/useRangePicker';
 import { DateOrRange, DateRange } from '@/types';
 
 import * as S from './RangePicker.styles';
-
-const DATE_FORMAT = 'MM-dd-yyyy';
 
 const formatDate = (date: Date | undefined) => {
   if (date) {
@@ -22,8 +21,15 @@ export const RangePicker: React.FC<{
   onChange?: (dateRange: DateRange) => void;
   placeholder: string;
   excludeDates?: DateOrRange[];
+  forceValidDates?: DateOrRange[];
   defaultValue?: DateRange;
-}> = ({ onChange, placeholder, excludeDates, defaultValue }) => {
+}> = ({
+  onChange,
+  placeholder,
+  excludeDates,
+  defaultValue,
+  forceValidDates,
+}) => {
   const {
     startDate,
     endDate,
@@ -34,6 +40,7 @@ export const RangePicker: React.FC<{
   } = useRangePicker({
     defaultValue,
     excludeDates,
+    forceValidDates,
   });
 
   React.useEffect(() => {
@@ -53,7 +60,6 @@ export const RangePicker: React.FC<{
         selectsDisabledDaysInRange
         placeholderText={placeholder}
         customInput={<Input renderValue={toString} type="range-picker" />}
-        minDate={new Date()}
         isClearable={true}
         onCalendarClose={onClose}
       />

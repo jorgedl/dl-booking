@@ -5,12 +5,14 @@ export const Button: React.FC<{
   className?: string;
   disabled?: boolean;
   onClick?(): void;
-}> = ({ children, className, disabled, onClick }) => (
+  type?: 'text' | 'primary';
+}> = ({ children, className, disabled, onClick, type }) => (
   <S.Button
     onKeyDown={({ key }) => key === 'Enter' && onClick && onClick()}
     onClick={onClick}
     className={className}
     disabled={disabled}
+    $type={type}
   >
     {children}
   </S.Button>

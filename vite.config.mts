@@ -10,4 +10,10 @@ export default defineConfig({
     host: true,
     strictPort: true,
   },
+  test: {
+    environment: 'jsdom',
+    setupFiles: ['./vitest.setup.ts'],
+    css: true,
+    globals: true,
+  },
 });

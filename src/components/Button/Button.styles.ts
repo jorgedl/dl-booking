@@ -1,6 +1,9 @@
 import styled, { css } from 'styled-components';
 
-export const Button = styled.button<{ disabled?: boolean }>`
+export const Button = styled.button<{
+  disabled?: boolean;
+  $type?: 'text' | 'primary';
+}>`
   border: 0;
   border-radius: var(--border-radius);
   background: var(--primary);

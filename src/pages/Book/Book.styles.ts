@@ -48,5 +48,5 @@ export const ImageCover = styled.div`
 export const Body = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: var(--margin-md);
 `;

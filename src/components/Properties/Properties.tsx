@@ -23,20 +23,24 @@ export const Properties: React.FC<{
             </S.SkeletonItem>
           </S.SkeletonContainer>
         ))}
-      {!isLoading &&
-        items?.map((property) => (
-          <Link
-            key={property.id}
-            to="/book/$propertyId"
-            params={{ propertyId: property.id }}
-            search={{
-              startDate: dateRange?.[0] ?? '',
-              endDate: dateRange?.[1] ?? '',
-            }}
-          >
-            <Property {...property} />
-          </Link>
-        ))}
+      {!isLoading && (
+        <>
+          {items?.map((property) => (
+            <Link
+              key={property.id}
+              to="/book/$propertyId"
+              params={{ propertyId: property.id }}
+              search={{
+                startDate: dateRange?.[0] ?? '',
+                endDate: dateRange?.[1] ?? '',
+              }}
+            >
+              <Property {...property} />
+            </Link>
+          ))}
+          {items?.length === 0 && 'No properties found.'}
+        </>
+      )}
     </S.List>
   );
 };

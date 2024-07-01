@@ -19,7 +19,7 @@ export const InnerNav = styled.nav`
   padding: var(--padding-md) 0;
   display: grid;
   grid-template-columns: 1fr 2fr 1fr;
-  gap: 1rem;
+  gap: var(--margin-md);
 
   @media screen and (max-width: 860px) {
     grid-template-columns: 1fr;
