@@ -12,7 +12,7 @@ export const Map: React.FC<{ markerCoordinates?: LngLat }> = ({
   React.useEffect(() => {
     mapRef.current = new maplibregl.Map({
       container: 'map',
-      style: `https://api.maptiler.com/maps/bright-v2/style.json?key=${import.meta.env.VITE_MAP_TYLER_KEY}`,
+      style: `https://api.maptiler.com/maps/bright-v2/style.json?key=${import.meta.env.VITE_MAP_TILER_KEY}`,
       center: [-74.5, 40],
       zoom: 9,
     });

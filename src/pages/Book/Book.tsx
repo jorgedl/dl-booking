@@ -36,10 +36,6 @@ export const Book: React.FC = () => {
 
   const bookingsContext = React.useContext(BookingsContext);
 
-  React.useEffect(() => {
-    console.log(bookingsContext?.state);
-  }, [bookingsContext?.state]);
-
   const markerCoordinates = React.useMemo(() => {
     return {
       lat: data?.lat || 0,

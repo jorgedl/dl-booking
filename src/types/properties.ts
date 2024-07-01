@@ -11,12 +11,3 @@ export interface Property {
 }
 
 export type Properties = Property[];
-
-export enum Categories {
-  BEACH = 'BEACH',
-  LAKE = 'LAKE',
-  CITY = 'CITY',
-  CABIN = 'CABIN',
-  LUXE = 'LUXE',
-  FARM = 'FARM',
-}

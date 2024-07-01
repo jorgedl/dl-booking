@@ -10,15 +10,15 @@ interface State {
 
 type Action =
   | {
-      type: BookingActions.BOOK;
+      type: typeof BookingActions.BOOK;
       payload: NewBooking;
     }
   | {
-      type: BookingActions.UNBOOK;
+      type: typeof BookingActions.UNBOOK;
       payload: string;
     }
   | {
-      type: BookingActions.EDIT;
+      type: typeof BookingActions.EDIT;
       payload: EditingBooking;
     };
 

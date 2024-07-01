@@ -3,13 +3,13 @@ export interface Booking {
   propertyId: string;
   startDate: string;
   endDate: string;
-  status: BookingStatus;
+  status: (typeof BookingStatus)[keyof typeof BookingStatus];
 }
 
-export enum BookingStatus {
-  BOOKED = 'BOOKED',
-  CANCELED = 'CANCELED',
-}
+export const BookingStatus = {
+  BOOKED: 'BOOKED',
+  CANCELED: 'CANCELED',
+} as const;
 
 export type NewBooking = Omit<Booking, 'id' | 'status'>;
 
