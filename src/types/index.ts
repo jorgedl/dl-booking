@@ -1,4 +1,4 @@
 export * from './actions';
-export * from './bookings';
+export * from './booking';
 export * from './properties';
 export * from './date';
