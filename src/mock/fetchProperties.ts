@@ -254,8 +254,7 @@ export const mockProperties: Property[] = [
   },
 ];
 
-export const fetchProperties: any = async (params: any) => {
-  console.log(params);
+export const fetchProperties: any = async () => {
   return new Promise((resolve) => {
     setTimeout(() => {
       resolve(mockProperties);
@@ -266,7 +265,6 @@ export const fetchProperties: any = async (params: any) => {
 export const autoCompleteProperties: any = async (params: {
   query: string;
 }) => {
-  console.log(params);
   return new Promise((resolve) => {
     setTimeout(() => {
       let response: (Property & { weight?: number })[] = mockProperties;
@@ -282,7 +280,6 @@ export const autoCompleteProperties: any = async (params: {
         response = withWeight.filter(
           ({ weight }) => weight / params.query.length >= 0.033,
         );
-        console.log(response);
       }
       resolve(response);
     }, 500);
@@ -290,7 +287,6 @@ export const autoCompleteProperties: any = async (params: {
 };
 
 export const fetchProperty: any = async (params: { id: string }) => {
-  console.log({ params });
   return new Promise((resolve) => {
     setTimeout(() => {
       resolve(

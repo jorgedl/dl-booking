@@ -25,7 +25,6 @@ export const Map: React.FC<{ markerCoordinates?: LngLat }> = ({
   }, []);
 
   React.useEffect(() => {
-    console.log(markerCoordinates);
     mapRef.current?.flyTo({
       center: markerCoordinates,
     });

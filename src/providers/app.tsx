@@ -1,7 +1,8 @@
 import { QueryClientProvider } from '@tanstack/react-query';
 import * as React from 'react';
-import { BallTriangle } from 'react-loader-spinner';
+import Skeleton from 'react-loading-skeleton';
 
+import { Container } from '@/components/Container';
 import { queryClient } from '@/lib/react-query';
 import { BookingsProvider } from '@/reducers/bookings';
 
@@ -17,7 +18,13 @@ export const AppProvider = ({ children }: Props) => {
       <GlobalStyle />
       <QueryClientProvider client={queryClient}>
         <BookingsProvider>
-          <React.Suspense fallback={<BallTriangle />}>
+          <React.Suspense
+            fallback={
+              <Container>
+                <Skeleton width={200} />
+              </Container>
+            }
+          >
             {children}
           </React.Suspense>
         </BookingsProvider>
