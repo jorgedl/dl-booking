@@ -1,5 +1,4 @@
 import { useParams, useSearch, useNavigate } from '@tanstack/react-router';
-import { isValid } from 'date-fns';
 import { LngLat } from 'maplibre-gl';
 import React from 'react';
 import Skeleton from 'react-loading-skeleton';
@@ -11,8 +10,9 @@ import { Header } from '@/components/Header';
 import { Map } from '@/components/Map';
 import { RangePicker } from '@/components/RangePicker';
 import { Title } from '@/components/Title';
+import { useLockedDays } from '@/hooks/useLockedDays';
 import { BookingsContext } from '@/reducers/bookings';
-import { BookingActions, DateOrRange, DateRange } from '@/types';
+import { BookingActions, DateRange } from '@/types';
 
 import * as S from './Book.styles';
 
@@ -34,12 +34,6 @@ export const Book: React.FC = () => {
     }
   }, [isFetched, data, navigate]);
 
-  React.useEffect(() => {
-    if (startDate && endDate) {
-      console.log({ isValid: isValid(startDate) && isValid(endDate) });
-    }
-  }, [startDate, endDate]);
-
   const context = React.useContext(BookingsContext);
 
   React.useEffect(() => {
@@ -54,41 +48,11 @@ export const Book: React.FC = () => {
   }, [data]);
 
   // In a production scenario these dates should be calculated and retrieved by the server. I'm using memoized objects to mock it in this project
-  const excludeDates = React.useMemo(() => {
-    // Locked dates from server
-    if (!data) {
-      return;
-    }
-    let lockedDaysOrRanges: DateOrRange[] = [];
-    if (Array.isArray(data?.lockedDays)) {
-      lockedDaysOrRanges = [...data.lockedDays];
-    }
-
-    // Locked days from state
-    if (context?.state.bookings) {
-      const property = context?.state.bookings.filter(
-        ({ propertyId }) => propertyId === data?.id,
-      );
-      if (property) {
-        property.forEach(
-          ({ startDate, endDate }) =>
-            startDate &&
-            endDate &&
-            lockedDaysOrRanges.push([startDate, endDate]),
-        );
-      }
-    }
-
-    return lockedDaysOrRanges;
-  }, [data, context?.state.bookings]);
+  const excludeDates = useLockedDays(data, context?.state.bookings);
 
   const isInvalid = React.useMemo(() => {
     return !(startDate && endDate);
   }, [startDate, endDate]);
-
-  React.useEffect(() => {
-    console.log({ excludeDates });
-  }, [excludeDates]);
 
   const onBook = React.useCallback(async () => {
     if (startDate && endDate && data) {

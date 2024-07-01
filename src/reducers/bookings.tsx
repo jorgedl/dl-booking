@@ -1,14 +1,16 @@
 import React, { createContext, useReducer, Dispatch } from 'react';
 import { v4 as uuid } from 'uuid';
 
-import { Booked } from '@/types';
+import { Booking, BookingStatus } from '@/types';
 import { BookingActions } from '@/types/actions';
 
 interface State {
-  bookings: Booked[];
+  bookings: Booking[];
 }
 
-type NewBooking = Omit<Booked, 'id'>;
+type NewBooking = Omit<Booking, 'id' | 'status'>;
+
+type EditingBooking = Omit<Booking, 'status' | 'propertyId'>;
 
 type Action =
   | {
@@ -21,11 +23,7 @@ type Action =
     }
   | {
       type: BookingActions.EDIT;
-      payload: {
-        id: string;
-        startDate: string;
-        endDate: string;
-      };
+      payload: EditingBooking;
     };
 
 type ContextType = {
@@ -44,12 +42,37 @@ const add = (bookingState: State['bookings'], booked: NewBooking) => {
   const newBooking = {
     ...booked,
     id: uuid(),
+    status: BookingStatus.BOOKED,
   };
   return [...bookingState, newBooking];
 };
 
 const remove = (bookingState: State['bookings'], bookingId: string) => {
-  return bookingState.filter(({ id }) => id !== bookingId);
+  return bookingState.map((booking) => {
+    if (booking.id === bookingId) {
+      return {
+        ...booking,
+        status: BookingStatus.CANCELED,
+      };
+    }
+    return booking;
+  });
+};
+
+const edit = (
+  bookingState: State['bookings'],
+  editingBooking: EditingBooking,
+) => {
+  return bookingState.map((booking) => {
+    if (booking.id === editingBooking.id) {
+      return {
+        ...booking,
+        startDate: editingBooking.startDate,
+        endDate: editingBooking.endDate,
+      };
+    }
+    return booking;
+  });
 };
 
 function reducer(state: State, action: Action): State {
@@ -67,16 +90,7 @@ function reducer(state: State, action: Action): State {
     case BookingActions.EDIT:
       return {
         ...state,
-        bookings: state.bookings.map((booking) => {
-          if (booking.id === action.payload.id) {
-            return {
-              ...booking,
-              startDate: action.payload.startDate,
-              endDate: action.payload.endDate,
-            };
-          }
-          return booking;
-        }),
+        bookings: edit(state.bookings, action.payload),
       };
     default:
       return state;

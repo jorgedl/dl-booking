@@ -8,8 +8,9 @@ import { Header } from '@/components/Header';
 import { RangePicker } from '@/components/RangePicker';
 import { ReservationDetails } from '@/components/ReservationDetails';
 import { Title } from '@/components/Title';
+import { useLockedDays } from '@/hooks/useLockedDays';
 import { BookingsContext } from '@/reducers/bookings';
-import { Booked, BookingActions, DateOrRange, DateRange } from '@/types';
+import { Booking, BookingActions, BookingStatus, DateRange } from '@/types';
 
 // import * as S from './Reservations.styles';
 
@@ -20,9 +21,9 @@ export const Reservations: React.FC = () => {
     undefined,
     undefined,
   ]);
-  const [editing, setEditing] = React.useState<Booked | undefined>();
+  const [editing, setEditing] = React.useState<Booking | undefined>();
 
-  const { data } = useProperty({
+  const { data, isLoading } = useProperty({
     params: { id: editing?.propertyId ?? '' },
     config: {
       enabled: !!editing?.propertyId,
@@ -30,33 +31,7 @@ export const Reservations: React.FC = () => {
   });
 
   // Once again generating memoized invalid dates. This should be done by the server
-  const excludeDates = React.useMemo(() => {
-    // Locked dates from server
-    if (!data) {
-      return;
-    }
-    let lockedDaysOrRanges: DateOrRange[] = [];
-    if (Array.isArray(data?.lockedDays)) {
-      lockedDaysOrRanges = [...data.lockedDays];
-    }
-
-    // Locked days from state
-    if (context?.state.bookings) {
-      const property = context?.state.bookings.filter(
-        ({ propertyId }) => propertyId === data?.id,
-      );
-      if (property) {
-        property.forEach(
-          ({ startDate, endDate }) =>
-            startDate &&
-            endDate &&
-            lockedDaysOrRanges.push([startDate, endDate]),
-        );
-      }
-    }
-
-    return lockedDaysOrRanges;
-  }, [data, context?.state.bookings]);
+  const excludeDates = useLockedDays(data, context?.state.bookings);
 
   return (
     <>
@@ -68,9 +43,12 @@ export const Reservations: React.FC = () => {
             {Array.isArray(context?.state.bookings) &&
               context?.state.bookings.map((booked) => (
                 <ReservationDetails
+                  isLoading={isLoading}
                   key={booked.id}
                   {...booked}
                   renderActions={() => {
+                    if (booked.status === BookingStatus.CANCELED)
+                      return <>Canceled</>;
                     return (
                       <>
                         {!(editing?.id === booked.id) && (
