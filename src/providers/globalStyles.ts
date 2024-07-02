@@ -48,7 +48,7 @@ export const GlobalStyle = createGlobalStyle`
     --text-primary: ${colors.dark.toString()};
     --text-secondary: ${colors.dark.lighten(30).toString()};
     --outline: #e9e9e9;
-    --disabled: #60a76f;
+    --disabled: ${colors.primary.lighten(30).toString()};
     --background: #FFF;
     
     --padding-xs: 4px;
