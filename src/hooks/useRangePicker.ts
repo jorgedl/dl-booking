@@ -56,16 +56,12 @@ export const useRangePicker = ({
               start: startDate,
               end: endDate,
             }).forEach((validDate) => forcedValidDays.push(validDate));
-          } else {
-            console.error('Invalid date range:', dateOrRange);
           }
         }
       } else {
         const parsedDate = parseStringToDate(dateOrRange);
         if (parsedDate) {
           forcedValidDays.push(parsedDate);
-        } else {
-          console.error('Invalid date:', dateOrRange);
         }
       }
     });

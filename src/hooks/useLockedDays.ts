@@ -2,7 +2,10 @@ import React from 'react';
 
 import { Booking, BookingStatus, DateOrRange, Property } from '@/types';
 
-export const useLockedDays = (property?: Property, bookings?: Booking[]) => {
+export const useLockedDays = (
+  property?: Pick<Property, 'id' | 'lockedDays'>,
+  bookings?: Booking[],
+) => {
   // Once again generating memoized invalid dates. This should be done by the server
   return React.useMemo(() => {
     // Locked dates from server
