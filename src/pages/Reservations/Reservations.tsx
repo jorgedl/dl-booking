@@ -73,7 +73,7 @@ export const Reservations: React.FC = () => {
                           </Flex>
                         )}
                         {editing?.id === booked.id && (
-                          <Flex $gap="medium">
+                          <>
                             <RangePicker
                               placeholder="Select new dates"
                               excludeDates={excludeDates}
@@ -82,26 +82,36 @@ export const Reservations: React.FC = () => {
                               ]}
                               onChange={setNewDates}
                             />
-                            <Button
-                              type="primary"
-                              onClick={() => {
-                                newDates[0] &&
-                                  newDates[1] &&
-                                  bookingsContext.dispatch({
-                                    type: BookingActions.EDIT,
-                                    payload: {
-                                      id: editing.id,
-                                      startDate: newDates[0],
-                                      endDate: newDates[1],
-                                    },
-                                  });
-                                setEditing(undefined);
-                              }}
-                              disabled={!newDates[0] || !newDates[1]}
-                            >
-                              Save
-                            </Button>
-                          </Flex>
+                            <Flex $gap="medium">
+                              <Button
+                                type="primary"
+                                onClick={() => {
+                                  setEditing(undefined);
+                                }}
+                              >
+                                Cancel edit
+                              </Button>
+                              <Button
+                                type="primary"
+                                onClick={() => {
+                                  newDates[0] &&
+                                    newDates[1] &&
+                                    bookingsContext.dispatch({
+                                      type: BookingActions.EDIT,
+                                      payload: {
+                                        id: editing.id,
+                                        startDate: newDates[0],
+                                        endDate: newDates[1],
+                                      },
+                                    });
+                                  setEditing(undefined);
+                                }}
+                                disabled={!newDates[0] || !newDates[1]}
+                              >
+                                Save
+                              </Button>
+                            </Flex>
+                          </>
                         )}
                       </>
                     );
