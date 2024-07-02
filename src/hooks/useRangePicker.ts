@@ -44,17 +44,29 @@ export const useRangePicker = ({
 
     const forcedValidDays: Date[] = [];
 
-    forceValidDates?.forEach((dateOrRange) => {
+    forceValidDates?.forEach((dateOrRange: any) => {
       if (Array.isArray(dateOrRange)) {
         if (dateOrRange[0] && dateOrRange[1]) {
-          eachDayOfInterval({
-            start: dateOrRange[0],
-            end: dateOrRange[1],
-          }).forEach((validDate) => forcedValidDays.push(validDate));
+          // Parse the dates to ensure they are Date objects
+          const startDate = parseStringToDate(dateOrRange[0]);
+          const endDate = parseStringToDate(dateOrRange[1]);
+
+          if (startDate && endDate) {
+            eachDayOfInterval({
+              start: startDate,
+              end: endDate,
+            }).forEach((validDate) => forcedValidDays.push(validDate));
+          } else {
+            console.error('Invalid date range:', dateOrRange);
+          }
         }
       } else {
         const parsedDate = parseStringToDate(dateOrRange);
-        parsedDate && forcedValidDays.push(parsedDate);
+        if (parsedDate) {
+          forcedValidDays.push(parsedDate);
+        } else {
+          console.error('Invalid date:', dateOrRange);
+        }
       }
     });
 

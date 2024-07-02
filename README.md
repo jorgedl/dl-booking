@@ -136,5 +136,9 @@ Ensure all critical functionalities are covered, including booking creation, upd
 
 ## Additional Documentation
 
-- [Hooks](./hooks/README.md)
-- [Global Styles](./providers/README.md)
+- [Hooks](docs/hooks.md)
+- [Global Styles](docs/styles.md)
+
+## License
+
+[MIT](https://choosealicense.com/licenses/mit/)
