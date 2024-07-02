@@ -2,7 +2,7 @@ import styled, { css } from 'styled-components';
 
 export const Flex = styled.div<{
   $justify?: 'space-between' | 'center' | 'end';
-  $align?: 'center';
+  $align?: 'center' | 'end';
   $vertical?: boolean;
   $gap?: 'small' | 'medium' | 'large';
 }>`

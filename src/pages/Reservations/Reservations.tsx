@@ -15,14 +15,19 @@ import { Booking, BookingActions, BookingStatus, DateRange } from '@/types';
 import * as S from './Reservations.styles';
 
 export const Reservations: React.FC = () => {
+  // Get the bookings context
   const bookingsContext = React.useContext(BookingsContext);
 
+  // State to hold new date range
   const [newDates, setNewDates] = React.useState<DateRange>([
     undefined,
     undefined,
   ]);
+
+  // State to hold the currently editing booking
   const [editing, setEditing] = React.useState<Booking | undefined>();
 
+  // Fetch property data for the current booking being edited. If editing?.propertyId is invalid, this query will be disabled
   const { data, isLoading } = useProperty({
     params: { id: editing?.propertyId ?? '' },
     config: {
@@ -47,73 +52,69 @@ export const Reservations: React.FC = () => {
                   key={booked.id}
                   {...booked}
                   renderActions={() => {
-                    if (booked.status === BookingStatus.CANCELED)
+                    if (booked.status === BookingStatus.CANCELED) {
                       return <>Canceled</>;
-                    return (
-                      <>
-                        {!(editing?.id === booked.id) && (
-                          <Flex $gap="medium">
+                    }
+
+                    if (editing?.id === booked.id) {
+                      return (
+                        <>
+                          <RangePicker
+                            placeholder="Select new dates"
+                            excludeDates={excludeDates}
+                            forceValidDates={[
+                              [editing.startDate, editing.endDate],
+                            ]}
+                            onChange={setNewDates}
+                          />
+                          <Flex $gap="medium" $justify="end">
                             <Button
-                              type="warning"
-                              onClick={() =>
-                                bookingsContext.dispatch({
-                                  type: BookingActions.UNBOOK,
-                                  payload: booked.id,
-                                })
-                              }
+                              type="primary"
+                              onClick={() => setEditing(undefined)}
                             >
-                              Cancel reservation
+                              Cancel edit
                             </Button>
                             <Button
-                              type="text"
-                              onClick={() => setEditing(booked)}
+                              type="primary"
+                              onClick={() => {
+                                if (newDates[0] && newDates[1]) {
+                                  bookingsContext.dispatch({
+                                    type: BookingActions.EDIT,
+                                    payload: {
+                                      id: editing.id,
+                                      startDate: newDates[0],
+                                      endDate: newDates[1],
+                                    },
+                                  });
+                                  setEditing(undefined);
+                                }
+                              }}
+                              disabled={!newDates[0] || !newDates[1]}
                             >
-                              Edit reservation
+                              Save
                             </Button>
                           </Flex>
-                        )}
-                        {editing?.id === booked.id && (
-                          <>
-                            <RangePicker
-                              placeholder="Select new dates"
-                              excludeDates={excludeDates}
-                              forceValidDates={[
-                                [editing.startDate, editing.endDate],
-                              ]}
-                              onChange={setNewDates}
-                            />
-                            <Flex $gap="medium">
-                              <Button
-                                type="primary"
-                                onClick={() => {
-                                  setEditing(undefined);
-                                }}
-                              >
-                                Cancel edit
-                              </Button>
-                              <Button
-                                type="primary"
-                                onClick={() => {
-                                  newDates[0] &&
-                                    newDates[1] &&
-                                    bookingsContext.dispatch({
-                                      type: BookingActions.EDIT,
-                                      payload: {
-                                        id: editing.id,
-                                        startDate: newDates[0],
-                                        endDate: newDates[1],
-                                      },
-                                    });
-                                  setEditing(undefined);
-                                }}
-                                disabled={!newDates[0] || !newDates[1]}
-                              >
-                                Save
-                              </Button>
-                            </Flex>
-                          </>
-                        )}
-                      </>
+                        </>
+                      );
+                    }
+
+                    return (
+                      <Flex $gap="medium" $justify="end">
+                        <Button
+                          type="warning"
+                          onClick={() =>
+                            bookingsContext.dispatch({
+                              type: BookingActions.UNBOOK,
+                              payload: booked.id,
+                            })
+                          }
+                        >
+                          Cancel reservation
+                        </Button>
+                        <Button type="text" onClick={() => setEditing(booked)}>
+                          Edit reservation
+                        </Button>
+                      </Flex>
                     );
                   }}
                 />

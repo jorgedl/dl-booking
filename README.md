@@ -71,7 +71,7 @@ DL Booking is a React application for managing property bookings. Users can crea
 
 ### Design Philosophy
 
-In this project, I aimed to use as few third-party components as possible. The goal was to share logic and create common front-end behaviors within the application. This approach ensures more control over the codebase and allows for better customization and maintenance.
+In this project, I implemented some components usually imported from third-party libraries to demonstrate my knowledge and logic about common components like grid, autocomplete, etc. For the autocomplete, I initially considered creating select options inside it but decided to update the property list according to the search term instead.
 
 ## Testing
 
@@ -130,8 +130,6 @@ Ensure all critical functionalities are covered, including booking creation, upd
 ├── routes
 │   ├── book
 ├── types
-├── App.tsx
-├── index.tsx
 ```
 
 ## Additional Documentation

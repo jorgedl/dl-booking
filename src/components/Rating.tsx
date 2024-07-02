@@ -21,7 +21,7 @@ export const Rating: React.FC<{
   const emptyCount = 5 - safeRating;
 
   return (
-    <Flex $align="center">
+    <Flex $align="center" aria-label={`${safeRating} stars rating`}>
       {new Array(safeRating).fill(undefined).map((_, i) => (
         <IconStarFilled size={16} key={i} />
       ))}

@@ -1,4 +1,4 @@
-import { format } from 'date-fns';
+import { addMonths, format } from 'date-fns';
 import React from 'react';
 import DatePicker from 'react-datepicker';
 
@@ -56,6 +56,9 @@ export const RangePicker: React.FC<{
         startDate={startDate}
         endDate={endDate}
         excludeDates={lockedDates}
+        minDate={new Date()}
+        // As I noticed in some booking systems, they all have a max date, usually from 6 to 12 months
+        maxDate={addMonths(new Date(), 12)}
         selectsRange
         selectsDisabledDaysInRange
         placeholderText={placeholder}

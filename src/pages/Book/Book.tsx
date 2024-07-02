@@ -74,11 +74,11 @@ export const Book: React.FC = () => {
                 <Skeleton height="20rem" width="100%" />
               </S.ImageCover>
               <Container>
-                <S.Body>
+                <Flex $gap="medium" $vertical>
                   <Skeleton height={32} />
                   <Skeleton count={2} />
                   <Skeleton height={48} width={120} />
-                </S.Body>
+                </Flex>
               </Container>
             </>
           )}
@@ -92,7 +92,7 @@ export const Book: React.FC = () => {
               )}
               <Container>
                 {data && (
-                  <S.Body>
+                  <Flex $gap="medium" $vertical>
                     <Flex $justify="space-between">
                       <Title>{data.label}</Title>
                       <Rating rating={data.rating} count={data.reviewCount} />
@@ -124,7 +124,7 @@ export const Book: React.FC = () => {
                         Book Now
                       </Button>
                     </div>
-                  </S.Body>
+                  </Flex>
                 )}
               </Container>
             </>

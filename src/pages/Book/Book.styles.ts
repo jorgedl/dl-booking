@@ -44,9 +44,3 @@ export const ImageCover = styled.div`
     align-self: center;
   }
 `;
-
-export const Body = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: var(--margin-md);
-`;
