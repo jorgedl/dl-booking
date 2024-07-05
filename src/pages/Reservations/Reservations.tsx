@@ -66,6 +66,7 @@ export const Reservations: React.FC = () => {
                               [editing.startDate, editing.endDate],
                             ]}
                             onChange={setNewDates}
+                            defaultValue={[booked.startDate, booked.endDate]}
                           />
                           <Flex $gap="medium" $justify="end">
                             <Button
