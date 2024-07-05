@@ -26,9 +26,6 @@
   "homepage": "https://github.com/jorgedl/dl-booking#readme",
   "devDependencies": {
     "@playwright/test": "^1.45.0",
-    "@tanstack/react-query-devtools": "^5.49.2",
-    "@tanstack/router-devtools": "^1.40.0",
-    "@tanstack/router-plugin": "^1.40.3",
     "@testing-library/jest-dom": "^6.4.6",
     "@testing-library/react": "^16.0.0",
     "@testing-library/user-event": "^14.5.2",
@@ -56,8 +53,12 @@
     "vitest": "^1.6.0"
   },
   "dependencies": {
+    "@tanstack/react-query-devtools": "^5.49.2",
+    "@tanstack/router-plugin": "^1.43.12",
+    "@tanstack/router-devtools": "^1.40.0",
     "@tabler/icons-react": "^3.7.0",
     "@tanstack/react-query": "^5.48.0",
+    "@tanstack/react-router": "^1.43.12",
     "date-fns": "^3.6.0",
     "maplibre-gl": "^4.5.0",
     "react": "^18.3.1",

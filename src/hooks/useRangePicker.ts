@@ -2,6 +2,7 @@ import { addDays, eachDayOfInterval, isSameDay } from 'date-fns';
 import React from 'react';
 
 import { getLastAvailableDay } from '@/helpers/getLastAvailableDay';
+import { ifBeforeUndefine } from '@/helpers/ifBeforeUndefine';
 import { overlapsRange } from '@/helpers/overlapsRange';
 import { parseStringToDate } from '@/helpers/parseDate';
 import { rangeToString } from '@/helpers/rangeToString';
@@ -20,10 +21,14 @@ export const useRangePicker = ({
 }) => {
   // State for the start and end dates
   const [startDate, setStartDate] = React.useState<Date | undefined>(
-    defaultValue?.[0] ? parseStringToDate(defaultValue?.[0]) : undefined,
+    defaultValue?.[0]
+      ? ifBeforeUndefine(parseStringToDate(defaultValue?.[0]))
+      : undefined,
   );
   const [endDate, setEndDate] = React.useState<Date | undefined>(
-    defaultValue?.[1] ? parseStringToDate(defaultValue?.[1]) : undefined,
+    defaultValue?.[1] && ifBeforeUndefine(parseStringToDate(defaultValue?.[0]))
+      ? ifBeforeUndefine(parseStringToDate(defaultValue?.[1]))
+      : undefined,
   );
 
   // If initial startDate and endDate are overlapping with locked dates, unset them
@@ -40,7 +45,9 @@ export const useRangePicker = ({
 
   // Memoized array of locked dates based on excludeDates
   const lockedDates = React.useMemo(() => {
-    if (!Array.isArray(excludeDates)) return [];
+    const initialLockedDates = [new Date()];
+
+    if (!Array.isArray(excludeDates)) return initialLockedDates;
 
     const forcedValidDays: Date[] = [];
 
@@ -90,7 +97,7 @@ export const useRangePicker = ({
 
       // Accumulate all valid dates
       return validDates.length ? [...accum, ...validDates] : accum;
-    }, []);
+    }, initialLockedDates);
 
     return invalidDates.filter(
       (invalidDate) =>
@@ -105,6 +112,14 @@ export const useRangePicker = ({
 
       let validEnd: Date | null = end;
       let validStart: Date | null = start;
+
+      if (start && !ifBeforeUndefine(start)) {
+        validStart = null;
+      }
+
+      if (end && !ifBeforeUndefine(end)) {
+        validEnd = null;
+      }
 
       if (start && end) {
         // Check if the selected range overlaps with any locked dates
