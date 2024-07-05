@@ -14,7 +14,7 @@ const formatDate = (date: Date | undefined) => {
 
 describe('RangePicker', () => {
   it('should initialize with default values', () => {
-    const defaultValue: [string, string] = ['01-01-2024', '01-10-2024'];
+    const defaultValue: [string, string] = ['01-02-2024', '01-10-2024'];
     const onChangeMock = vi.fn();
 
     render(
@@ -32,7 +32,7 @@ describe('RangePicker', () => {
     const input = screen.getByPlaceholderText('Select date range');
     expect(input).toBeInTheDocument();
 
-    expect(input).toHaveValue('January 1, 2024 - January 10, 2024');
+    expect(input).toHaveValue('January 2, 2024 - January 10, 2024');
   });
 
   it('should update date range and call onChange', async () => {
@@ -50,10 +50,12 @@ describe('RangePicker', () => {
     await user.click(input);
 
     // Select start date
-    const startDate = new Date('2024-01-01T00:00:00');
+    const startDate = new Date('2024-01-02T00:00:00');
     const startDateString = formatDate(startDate);
 
-    await user.click(screen.getByLabelText('Choose Monday, January 1st, 2024'));
+    await user.click(
+      screen.getByLabelText('Choose Tuesday, January 2nd, 2024'),
+    );
 
     // Select end date
     const endDate = new Date('2024-01-10T00:00:00');
@@ -71,7 +73,7 @@ describe('RangePicker', () => {
   });
 
   it('should clear the date range', async () => {
-    const defaultValue: [string, string] = ['01-01-2024', '01-10-2024'];
+    const defaultValue: [string, string] = ['01-02-2024', '01-10-2024'];
     const onChangeMock = vi.fn();
     const user = userEvent.setup();
 

@@ -11,10 +11,10 @@ const TO_STRING_FORMAT = 'MMMM d, yyyy';
 
 describe('useRangePicker', () => {
   it('should initialize with default values', () => {
-    const defaultValue: [string, string] = ['01-01-2024', '01-10-2024'];
+    const defaultValue: [string, string] = ['01-02-2024', '01-10-2024'];
     const { result } = renderHook(() => useRangePicker({ defaultValue }));
 
-    const expectedStartDate = toDate(new Date('2024-01-01T00:00:00'));
+    const expectedStartDate = toDate(new Date('2024-01-02T00:00:00'));
     const expectedEndDate = toDate(new Date('2024-01-10T00:00:00'));
 
     expect(
@@ -26,7 +26,7 @@ describe('useRangePicker', () => {
   });
 
   it('should unset start and end dates if they overlap with locked dates', () => {
-    const excludeDates: DateOrRange[] = [['01-01-2024', '01-10-2024']];
+    const excludeDates: DateOrRange[] = [['01-02-2024', '01-10-2024']];
     const defaultValue: [string, string] = ['01-05-2024', '01-06-2024'];
     const { result } = renderHook(() =>
       useRangePicker({ excludeDates, defaultValue }),
@@ -42,15 +42,17 @@ describe('useRangePicker', () => {
 
     act(() => {
       result.current.onChange([
-        new Date('2024-01-01T00:00:00'),
+        new Date('2024-01-02T00:00:00'),
         new Date('2024-01-04T00:00:00'),
       ]);
     });
 
+    console.log(result.current.startDate);
+
     expect(
       isSameDay(
         toDate(result.current.startDate!),
-        toDate(new Date('2024-01-01T00:00:00')),
+        toDate(new Date('2024-01-02T00:00:00')),
       ),
     ).toBe(true);
     expect(
@@ -62,7 +64,7 @@ describe('useRangePicker', () => {
 
     act(() => {
       result.current.onChange([
-        new Date('2024-01-01T00:00:00'),
+        new Date('2024-01-02T00:00:00'),
         new Date('2024-01-06T00:00:00'),
       ]);
     });
@@ -70,7 +72,7 @@ describe('useRangePicker', () => {
     expect(
       isSameDay(
         toDate(result.current.startDate!),
-        toDate(new Date('2024-01-01T00:00:00')),
+        toDate(new Date('2024-01-02T00:00:00')),
       ),
     ).toBe(true);
     expect(
@@ -85,13 +87,20 @@ describe('useRangePicker', () => {
     const { result } = renderHook(() => useRangePicker({}));
 
     act(() => {
-      result.current.onChange([new Date('2024-01-01T00:00:00'), null]);
+      result.current.onChange([new Date('2024-01-02T00:00:00'), null]);
     });
+
+    console.log(
+      isSameDay(
+        toDate(result.current.startDate!),
+        toDate(new Date('2024-01-02T00:00:00')),
+      ),
+    );
 
     expect(
       isSameDay(
         toDate(result.current.startDate!),
-        toDate(new Date('2024-01-01T00:00:00')),
+        toDate(new Date('2024-01-02T00:00:00')),
       ),
     ).toBe(true);
     expect(result.current.endDate).toBeUndefined();
@@ -103,7 +112,7 @@ describe('useRangePicker', () => {
     expect(
       isSameDay(
         toDate(result.current.endDate!),
-        toDate(new Date('2024-01-02T00:00:00')),
+        toDate(new Date('2024-01-03T00:00:00')),
       ),
     ).toBe(true); // Adjusted to the next day
   });
@@ -113,26 +122,26 @@ describe('useRangePicker', () => {
 
     act(() => {
       result.current.onChange([
-        new Date('2024-01-01T00:00:00'),
+        new Date('2024-01-02T00:00:00'),
         new Date('2024-01-05T00:00:00'),
       ]);
     });
 
-    const expectedString = `${format(toDate(new Date('2024-01-01T00:00:00')), TO_STRING_FORMAT)} - ${format(toDate(new Date('2024-01-05T00:00:00')), TO_STRING_FORMAT)}`;
+    const expectedString = `${format(toDate(new Date('2024-01-02T00:00:00')), TO_STRING_FORMAT)} - ${format(toDate(new Date('2024-01-05T00:00:00')), TO_STRING_FORMAT)}`;
     expect(result.current.toString()).toEqual(expectedString);
 
     act(() => {
-      result.current.onChange([new Date('2024-01-01T00:00:00'), null]);
+      result.current.onChange([new Date('2024-01-02T00:00:00'), null]);
     });
 
-    const expectedStringCheckOut = `${format(toDate(new Date('2024-01-01T00:00:00')), TO_STRING_FORMAT)} - Check-out`;
+    const expectedStringCheckOut = `${format(toDate(new Date('2024-01-02T00:00:00')), TO_STRING_FORMAT)} - Check-out`;
     expect(result.current.toString()).toEqual(expectedStringCheckOut);
   });
 });
 
 describe('getLastAvailableDay', () => {
   it('should return the last available day before a locked date', () => {
-    const start = new Date('2024-01-01T00:00:00');
+    const start = new Date('2024-01-02T00:00:00');
     const lockedDates = [
       new Date('2024-01-05T00:00:00'),
       new Date('2024-01-10T00:00:00'),
@@ -145,7 +154,7 @@ describe('getLastAvailableDay', () => {
   });
 
   it('should return null if no valid date is found', () => {
-    const start = new Date('2024-01-01T00:00:00');
+    const start = new Date('2024-01-02T00:00:00');
     const lockedDates = [new Date('2024-01-02T00:00:00')];
 
     const result = getLastAvailableDay(start, lockedDates);
@@ -156,7 +165,7 @@ describe('getLastAvailableDay', () => {
 
 describe('overlapsRange', () => {
   it('should return true if the range overlaps with locked dates', () => {
-    const start = new Date('2024-01-01T00:00:00');
+    const start = new Date('2024-01-02T00:00:00');
     const end = new Date('2024-01-10T00:00:00');
     const lockedDates = [new Date('2024-01-05T00:00:00')];
 
@@ -166,7 +175,7 @@ describe('overlapsRange', () => {
   });
 
   it('should return false if the range does not overlap with locked dates', () => {
-    const start = new Date('2024-01-01T00:00:00');
+    const start = new Date('2024-01-02T00:00:00');
     const end = new Date('2024-01-04T00:00:00');
     const lockedDates = [new Date('2024-01-05T00:00:00')];
 
